@@ -6,20 +6,20 @@
   <title>Análisis del ecosistema de 10Pines</title>
   <style>
     :root {
-      --bg: #111111;
-      --paper: #111111;
-      --panel: #161616;
-      --ink: #f2efe8;
-      --muted: #b9b1a5;
-      --line: #2d2b27;
-      --soft: #171717;
-      --soft-2: #1d1d1d;
-      --accent: #cbf060;
-      --accent-dark: #cbf060;
-      --accent-soft: #202512;
-      --warn: #2a2414;
-      --danger: #2a1e18;
-      --blue: #171c22;
+      --bg: #f8f6f1;
+      --paper: #f8f6f1;
+      --panel: #f8f6f1;
+      --ink: #171614;
+      --muted: #6a655d;
+      --line: #ddd7ce;
+      --soft: #f3efe8;
+      --soft-2: #ebe6dc;
+      --accent: #7ca91e;
+      --accent-dark: #6c9818;
+      --accent-soft: #eef5df;
+      --warn: #fff4d8;
+      --danger: #fbe7de;
+      --blue: #eef3fa;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -29,20 +29,20 @@
       font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
       background: var(--bg);
     }
-    a { color: #dceca8; text-decoration: none; }
+    a { color: #506f16; text-decoration: none; }
     a:hover { text-decoration: underline; }
     code {
-      background: #1e1e1e;
+      background: #efebe3;
       border-radius: 4px;
       padding: 2px 6px;
       font-size: 0.94em;
-      color: #f0e7d8;
+      color: #2e2922;
     }
     .layout {
       width: min(1360px, calc(100vw - 28px));
       margin: 24px auto 80px;
       display: grid;
-      grid-template-columns: minmax(0, 980px) 260px;
+      grid-template-columns: 220px minmax(0, 940px);
       gap: 24px;
       align-items: start;
     }
@@ -51,7 +51,7 @@
       border: none;
       border-radius: 0;
       box-shadow: none;
-      padding: 28px 12px 28px 28px;
+      padding: 28px 24px 28px 10px;
       display: grid;
       gap: 42px;
     }
@@ -59,23 +59,26 @@
       position: sticky;
       top: 20px;
       display: grid;
-      gap: 14px;
+      gap: 18px;
       align-self: start;
+      padding-top: 8px;
     }
     .side-card {
-      background: rgba(19, 19, 19, 0.94);
-      border: 1px solid var(--line);
-      border-radius: 10px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
       box-shadow: none;
-      padding: 16px;
+      padding: 0;
       display: grid;
       gap: 12px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: none;
     }
     .side-card strong {
       font-size: 12px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
+      color: var(--muted);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     .side-nav {
       display: grid;
@@ -83,24 +86,24 @@
     }
     .side-nav a {
       display: block;
-      padding: 9px 10px;
-      border-radius: 8px;
+      padding: 2px 0;
+      border-radius: 0;
       background: transparent;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.35;
-      border: 1px solid transparent;
+      line-height: 1.55;
+      border: none;
     }
     .side-nav a:hover {
-      background: #171717;
-      border-color: var(--line);
+      background: transparent;
+      color: var(--ink);
       text-decoration: none;
     }
     .eyebrow {
       font-size: 12px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--muted);
       font-weight: 800;
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -174,7 +177,7 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent-dark);
       font-weight: 800;
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -189,7 +192,7 @@
     .callout {
       display: grid;
       gap: 8px;
-      border-left: 2px solid var(--accent);
+      border-left: 2px solid var(--accent-dark);
       border-radius: 0;
       background: transparent;
       padding: 16px 18px;
@@ -229,7 +232,7 @@
       padding: 5px 10px;
       border-radius: 999px;
       background: transparent;
-      color: var(--accent);
+      color: var(--accent-dark);
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -258,7 +261,7 @@
       min-height: 96px;
       padding: 16px;
       border-radius: 8px;
-      background: #161616;
+      background: white;
       border: 1px solid var(--line);
       box-shadow: none;
       display: grid;
@@ -269,11 +272,11 @@
     .node.core {
       width: 240px;
       min-height: 122px;
-      border: 1px solid #44591b;
-      background: #1a2110;
+      border: 1px solid #cfe4a2;
+      background: #f4f9e8;
       color: var(--ink);
     }
-    .node.core small { color: #d8d4cb; }
+    .node.core small { color: #595445; }
     .table-wrap {
       width: 100%;
       overflow: auto;
@@ -294,13 +297,13 @@
       border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
-      background: #141414;
+      background: white;
     }
     th {
       position: sticky;
       top: 0;
       z-index: 2;
-      background: #171717;
+      background: #f1ece3;
       color: var(--ink);
       font-size: 11px;
       letter-spacing: 0.08em;
@@ -312,13 +315,13 @@
       position: sticky;
       left: 0;
       z-index: 1;
-      background: #141414;
+      background: #fbfaf7;
       min-width: 170px;
       max-width: 170px;
     }
     .sticky-col thead th:first-child {
       z-index: 3;
-      background: #171717;
+      background: #ece5da;
     }
     tr:last-child td { border-bottom: none; }
     tr td:last-child, tr th:last-child { border-right: none; }
@@ -336,14 +339,14 @@
     .bar {
       height: 15px;
       border-radius: 999px;
-      background: #222222;
+      background: #ece7dd;
       overflow: hidden;
     }
     .bar span {
       display: block;
       height: 100%;
       border-radius: 999px;
-      background: var(--accent);
+      background: var(--accent-dark);
     }
     .evidence-grid {
       display: grid;
@@ -355,7 +358,7 @@
       gap: 10px;
       border-radius: 8px;
       border: 1px solid var(--line);
-      background: var(--soft);
+      background: white;
       padding: 16px;
     }
     .shot-frame {
@@ -384,9 +387,9 @@
       border-radius: 8px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(to right, transparent calc(50% - 1px), rgba(242,239,232,0.14) calc(50% - 1px), rgba(242,239,232,0.14) calc(50% + 1px), transparent calc(50% + 1px)),
-        linear-gradient(to top, transparent calc(50% - 1px), rgba(242,239,232,0.14) calc(50% - 1px), rgba(242,239,232,0.14) calc(50% + 1px), transparent calc(50% + 1px)),
-        #141414;
+        linear-gradient(to right, transparent calc(50% - 1px), rgba(23,22,20,0.12) calc(50% - 1px), rgba(23,22,20,0.12) calc(50% + 1px), transparent calc(50% + 1px)),
+        linear-gradient(to top, transparent calc(50% - 1px), rgba(23,22,20,0.12) calc(50% - 1px), rgba(23,22,20,0.12) calc(50% + 1px), transparent calc(50% + 1px)),
+        white;
       overflow: hidden;
       padding: 22px;
       max-width: 900px;
@@ -426,8 +429,8 @@
       height: 16px;
       border-radius: 999px;
       margin: 0 auto;
-      background: #d8e9a7;
-      border: 3px solid #111111;
+      background: var(--accent-dark);
+      border: 3px solid white;
       box-shadow: none;
     }
     .point strong {
@@ -457,7 +460,10 @@
       gap: 12px;
       border: 1px solid var(--line);
     }
-    .f1, .f2, .f3, .f4 { background: var(--soft); }
+    .f1 { background: #f2f7e7; }
+    .f2 { background: #fff0e4; }
+    .f3 { background: #eef3fa; }
+    .f4 { background: #f8ece6; }
     .foot {
       display: flex;
       justify-content: space-between;
@@ -734,7 +740,7 @@
         <div class="evidence-grid">
           <article class="shot">
             <div class="shot-frame mid">
-              <img src="assets/main-home.png" alt="Main home" />
+              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/www.10pines.com/index.png" alt="Main home" />
             </div>
             <div class="caption">
               <strong>Main home.</strong> Conviene mostrar un poco más abajo del hero para que se vea mejor cómo conviven oferta, proof y narrativa de marca.
@@ -744,7 +750,7 @@
           </article>
           <article class="shot">
             <div class="shot-frame lower">
-              <img src="assets/blog-home.png" alt="Blog home" />
+              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/blog.10pines.com/index.png" alt="Blog home" />
             </div>
             <div class="caption">
               <strong>Blog.</strong> Acá importa más ver la estructura de listado que el hero: el blog se comporta como sistema editorial real.
@@ -754,7 +760,7 @@
           </article>
           <article class="shot">
             <div class="shot-frame mid">
-              <img src="assets/culture-home.png" alt="Culture manifesto" />
+              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/cultura.10pines.com/en.png" alt="Culture manifesto" />
             </div>
             <div class="caption">
               <strong>Manifiesto cultural.</strong> Conviene mostrar mejor el cuerpo del contenido para que se lea como documento centrado y no solo como portada.
@@ -764,7 +770,7 @@
           </article>
           <article class="shot">
             <div class="shot-frame lower">
-              <img src="assets/academy-home.png" alt="Academia home" />
+              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/academia.10pines.com/index.png" alt="Academia home" />
             </div>
             <div class="caption">
               <strong>Academia.</strong> El valor acá no está en el hero, sino en ver catálogo, videos, prueba y densidad de oferta.

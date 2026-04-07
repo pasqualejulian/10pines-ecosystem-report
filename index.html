@@ -56,7 +56,7 @@
       box-shadow: none;
       padding: 20px 0 40px;
       display: grid;
-      gap: 42px;
+      gap: 64px;
     }
     .sidebar {
       order: -1;
@@ -162,8 +162,9 @@
     }
     .section {
       display: grid;
-      gap: 18px;
-      scroll-margin-top: 24px;
+      gap: 22px;
+      scroll-margin-top: 30px;
+      padding-top: 4px;
     }
     .prose {
       display: grid;
@@ -414,17 +415,17 @@
     tr td:last-child, tr th:last-child { border-right: none; }
     .bars {
       display: grid;
-      gap: 12px;
+      gap: 14px;
       max-width: 820px;
     }
     .bar-row {
       display: grid;
-      grid-template-columns: 180px 1fr 110px;
-      gap: 12px;
+      grid-template-columns: 180px 1fr 120px;
+      gap: 16px;
       align-items: center;
     }
     .bar {
-      height: 15px;
+      height: 12px;
       border-radius: 999px;
       background: #ece7dd;
       overflow: hidden;
@@ -433,20 +434,21 @@
       display: block;
       height: 100%;
       border-radius: 999px;
-      background: #7f7a73;
+      background: #8e887f;
     }
-    .bar-row.level-very-high span { background: #b45f3c; }
-    .bar-row.level-high span { background: #8a7b2d; }
-    .bar-row.level-med-high span { background: #5f7391; }
-    .bar-row.level-medium span { background: #8a837b; }
-    .bar-row.level-very-high strong,
-    .bar-row.level-very-high span + span { color: #9c4c2b; }
-    .bar-row.level-high strong,
-    .bar-row.level-high span + span { color: #6f6323; }
-    .bar-row.level-med-high strong,
-    .bar-row.level-med-high span + span { color: #4b5e7a; }
-    .bar-row.level-medium strong,
-    .bar-row.level-medium span + span { color: #6f6860; }
+    .bar-row.level-very-high .bar span { background: #b36c4b; }
+    .bar-row.level-high .bar span { background: #9a8b45; }
+    .bar-row.level-med-high .bar span { background: #6e7f99; }
+    .bar-row.level-medium .bar span { background: #948c82; }
+    .bar-row > strong {
+      color: var(--ink);
+    }
+    .bar-row > span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.2;
+      text-align: left;
+    }
     .tree-table table {
       min-width: 0;
     }
@@ -472,6 +474,19 @@
     }
     .dup-table col.read-col {
       width: 27.5%;
+    }
+    .dup-table td:first-child,
+    .dup-table th:first-child {
+      position: static;
+      min-width: 0;
+      max-width: none;
+      background: white;
+    }
+    .dup-table td code {
+      font-size: 0.9em;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .evidence-grid {
       display: grid;
@@ -640,7 +655,7 @@
 
       <section class="section" id="objetivo">
         <div class="eyebrow">Objetivo del análisis</div>
-        <h2>Entender el estado actual para abrir la discusión de arquitectura</h2>
+        <h2>Objetivo</h2>
         <div class="prose">
           <p>Este análisis busca <strong>entender cómo está organizado hoy el ecosistema público de 10Pines</strong>, qué contenido y secciones tiene, qué patrones y repeticiones aparecen, y qué tensiones deja abiertas de cara a un futuro boceto de arquitectura con mejoras potenciales.</p>
           <p>No es todavía una propuesta de solución. Es una lectura estructurada del estado actual para discutirla con el equipo y usarla como base de la siguiente etapa.</p>
@@ -649,7 +664,7 @@
 
       <section class="section" id="ecosistema">
         <div class="eyebrow">Ecosistema</div>
-        <h2>Tree map actual del ecosistema</h2>
+        <h2>Tree map</h2>
         <div class="prose">
           <p><strong>Partiendo desde <code>www.10pines.com</code></strong>, el sistema no baja solamente a secciones internas: deriva a propiedades con identidad propia. Por eso conviene leerlo como un `L1 / L2` actual, no solo como “home + páginas”.</p>
         </div>
@@ -758,7 +773,7 @@
 
       <section class="section" id="lectura-ecosistema">
         <div class="eyebrow">Lectura del ecosistema</div>
-        <h2>El main site es sólido, pero el sistema no se comporta como “home + secciones”</h2>
+        <h2>Estructura</h2>
         <div class="prose">
           <p><strong>El sitio principal funciona.</strong> Presenta bien a la empresa, combina oferta, método, tecnología, proof y contacto, y corrige la impresión inicial de que la propuesta comercial estaba ausente.</p>
           <p><strong>La complejidad aparece después.</strong> Alrededor del main site hay varias superficies con roles reales, densidad propia y fronteras todavía poco explícitas. No se comporta como una homepage con secciones internas. Se comporta como un sistema de propiedades con funciones distintas.</p>
@@ -789,7 +804,7 @@
 
       <section class="section" id="contenido-secciones">
         <div class="eyebrow">Contenido y secciones</div>
-        <h2>Qué muestra cada superficie y qué parte del relato construye</h2>
+        <h2>Contenido</h2>
         <div class="prose">
           <p><strong>El main site</strong> concentra oferta, método, tecnología, proof y contacto. <strong>El blog</strong> sostiene la capa de expertise. <strong>Cultura</strong> funciona como manifiesto. <strong>Academia</strong> y <strong>cursos</strong> estructuran la capa de learning, con distintos grados de discovery, transacción y consumo.</p>
           <p>Mirado en conjunto, el ecosistema no solo cuenta “qué hace 10Pines”. También cuenta <strong>cómo piensa</strong>, <strong>cómo trabaja</strong> y <strong>cómo enseña</strong>. Eso es valioso, pero también hace más compleja la síntesis.</p>
@@ -818,7 +833,7 @@
 
       <section class="section" id="exposicion">
         <div class="eyebrow">Exposición</div>
-        <h2>Niveles de exposición: qué aparece primero y por qué importa</h2>
+        <h2>Exposición</h2>
         <div class="prose">
           <p><strong>Exposición</strong> no significa solamente “qué está en el menú”. Acá se usa para medir qué tan visible, accesible y persistente es cada tema dentro del ecosistema.</p>
           <p><strong>Importa</strong> porque cuando varias capas del sistema aparecen con exposición alta, dejan de ordenarse jerárquicamente y empiezan a competir por primacía.</p>
@@ -839,7 +854,7 @@
 
       <section class="section">
         <div class="eyebrow">Exposición</div>
-        <h2>Detalle por tema</h2>
+        <h2>Temas</h2>
         <div class="table-wrap sticky-col">
           <table>
             <thead>
@@ -865,7 +880,7 @@
 
       <section class="section" id="patrones">
         <div class="eyebrow">Patrones</div>
-        <h2>Los 3 patrones que más estructuran el sistema</h2>
+        <h2>Patrones</h2>
         <div class="three">
           <div class="card">
             <span class="pill">Patrón 1</span>
@@ -909,7 +924,7 @@
 
       <section class="section" id="evidencia">
         <div class="eyebrow">Evidencia visual</div>
-        <h2>Recortes concretos para entender de qué se habla</h2>
+        <h2>Evidencia</h2>
         <div class="prose">
           <p>En esta versión conviene usar las capturas como <strong>evidencia puntual</strong>, no como página entera. El recorte tiene que ayudar a ver el bloque relevante y, al lado, citar la URL para que cualquiera pueda entrar y verlo por sí mismo.</p>
         </div>
@@ -963,7 +978,7 @@
 
       <section class="section" id="mensajes">
         <div class="eyebrow">Distribución de mensajes</div>
-        <h2>Qué comunica más fuerte el sistema</h2>
+        <h2>Mensajes</h2>
         <div class="prose">
           <p><strong>Message distribution</strong> mide el peso relativo de cada capa narrativa en el conjunto del ecosistema. Sirve para ver si el sistema explica primero lo que el negocio vende o si otras capas quedan más legibles.</p>
           <p>Hoy el ecosistema deja una impresión especialmente fuerte de <strong>cultura</strong>, <strong>expertise</strong> y <strong>learning</strong>.</p>
@@ -983,7 +998,7 @@
 
       <section class="section" id="duplicacion">
         <div class="eyebrow">Duplicaciones y solapamientos</div>
-        <h2>Qué está duplicado y qué se pisa parcialmente</h2>
+        <h2>Duplicación</h2>
         <div class="three">
           <div class="card">
             <span class="pill">Duplicación exacta</span>
@@ -1001,7 +1016,7 @@
             <p><code>cultura</code> y <code>blog/culture</code> hablan del mismo territorio desde lógicas distintas: manifiesto vs stream editorial.</p>
           </div>
         </div>
-        <div class="table-wrap sticky-col dup-table">
+        <div class="table-wrap dup-table">
           <table>
             <colgroup>
               <col />
@@ -1022,11 +1037,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Main domain</td><td><code>www.10pines.com</code></td><td><code>10pines.com</code></td><td>Estructural</td><td>Dos canones para la misma superficie</td><td>Ambigüedad canónica.</td></tr>
-              <tr><td>Proof en PDF</td><td><code>www.10pines.com/brochure_en.pdf</code></td><td><code>10pines.com/brochure_en.pdf</code></td><td>Estructural</td><td>Proof duplicado como archivo</td><td>Menor continuidad nativa.</td></tr>
-              <tr><td>Catálogo de training</td><td><code>academia/show_courses</code></td><td><code>cursos/l/products</code></td><td>Estructural + narrativa</td><td>Dos entry points parecidos</td><td>Discovery dividido.</td></tr>
-              <tr><td>Detalle de curso</td><td><code>academia/courses/...</code></td><td><code>cursos/p/...</code></td><td>Estructural</td><td>Más de una lógica de course detail</td><td>Ownership distribuido.</td></tr>
-              <tr><td>Historia cultural</td><td><code>cultura/en</code></td><td><code>blog/culture</code></td><td>Narrativo</td><td>Cultura partida entre canon y stream</td><td>La referencia principal de cultura pierde fuerza.</td></tr>
+              <tr><td>Dominio principal</td><td><code>www.10pines.com</code></td><td><code>10pines.com</code></td><td>Estructural</td><td>Dos canones para una misma superficie.</td><td>Ambigüedad canónica.</td></tr>
+              <tr><td>Proof en PDF</td><td><code>www.10pines.com/brochure_en.pdf</code></td><td><code>10pines.com/brochure_en.pdf</code></td><td>Estructural</td><td>El proof vive duplicado como archivo.</td><td>Menor continuidad nativa.</td></tr>
+              <tr><td>Catálogo</td><td><code>academia/show_courses</code></td><td><code>cursos/l/products</code></td><td>Estructural + narrativa</td><td>Hay dos entry points parecidos para training.</td><td>Discovery dividido.</td></tr>
+              <tr><td>Detalle</td><td><code>academia/courses/...</code></td><td><code>cursos/p/...</code></td><td>Estructural</td><td>Conviven más de una lógica de course detail.</td><td>Ownership distribuido.</td></tr>
+              <tr><td>Cultura</td><td><code>cultura/en</code></td><td><code>blog/culture</code></td><td>Narrativo</td><td>Cultura se parte entre canon y stream.</td><td>La referencia principal pierde fuerza.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1038,7 +1053,7 @@
 
       <section class="section" id="tensiones-estructurales">
         <div class="eyebrow">Tensiones estructurales del ecosistema</div>
-        <h2>Qué dificulta hoy una lectura más clara del sistema</h2>
+        <h2>Tensiones</h2>
         <div class="prose">
           <p><strong>La primera tensión</strong> es que varias propiedades cumplen funciones reales y maduras al mismo tiempo. El sistema no tiene satélites débiles: tiene satélites potentes.</p>
           <p><strong>La segunda</strong> es que la capa de learning reparte discovery, detail, transacción y consumo entre varias superficies. <strong>La tercera</strong> es que parte del proof más rico sigue saliendo del flujo nativo hacia archivos o assets.</p>
@@ -1048,7 +1063,7 @@
 
       <section class="section" id="foda">
         <div class="eyebrow">FODA</div>
-        <h2>Lectura estratégica resumida</h2>
+        <h2>FODA</h2>
         <div class="foda">
           <div class="box f1">
             <h3>Fortalezas</h3>
@@ -1090,7 +1105,7 @@
 
       <section class="section" id="tension">
         <div class="eyebrow">Tensión de posicionamiento</div>
-        <h2>Matriz de tensión: dónde parece quedar 10Pines hoy</h2>
+        <h2>Posicionamiento</h2>
         <div class="prose">
           <p>Esta matriz no busca definir una solución. Busca <strong>mostrar la tensión actual</strong>.</p>
           <p><strong>Eje X:</strong> legibilidad comercial, de difusa a clara. <strong>Eje Y:</strong> fuerza de la capa cultural/editorial, de baja a dominante.</p>
@@ -1135,7 +1150,7 @@
 
       <section class="section" id="benchmark">
         <div class="eyebrow">Lectura de benchmarks</div>
-        <h2>Hallazgos útiles que dejan los benchmarks</h2>
+        <h2>Benchmarks</h2>
         <div class="three">
           <div class="card">
             <span class="pill">Hallazgo 1</span>
@@ -1157,7 +1172,7 @@
 
       <section class="section" id="preguntas">
         <div class="eyebrow">Preguntas abiertas</div>
-        <h2>Qué conviene discutir con el equipo</h2>
+        <h2>Preguntas</h2>
         <div class="four">
           <div class="card">
             <span class="pill">Q1</span>

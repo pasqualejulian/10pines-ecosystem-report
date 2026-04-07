@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Análisis del ecosistema de 10Pines</title>
+  <style>
+    :root {
+      --bg: #111111;
+      --paper: #111111;
+      --panel: #161616;
+      --ink: #f2efe8;
+      --muted: #b9b1a5;
+      --line: #2d2b27;
+      --soft: #171717;
+      --soft-2: #1d1d1d;
+      --accent: #cbf060;
+      --accent-dark: #cbf060;
+      --accent-soft: #202512;
+      --warn: #2a2414;
+      --danger: #2a1e18;
+      --blue: #171c22;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      background: var(--bg);
+    }
+    a { color: #dceca8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #1e1e1e;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.94em;
+      color: #f0e7d8;
+    }
+    .layout {
+      width: min(1360px, calc(100vw - 28px));
+      margin: 24px auto 80px;
+      display: grid;
+      grid-template-columns: minmax(0, 980px) 260px;
+      gap: 24px;
+      align-items: start;
+    }
+    .article {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 28px 12px 28px 28px;
+      display: grid;
+      gap: 42px;
+    }
+    .sidebar {
+      position: sticky;
+      top: 20px;
+      display: grid;
+      gap: 14px;
+      align-self: start;
+    }
+    .side-card {
+      background: rgba(19, 19, 19, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: none;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      backdrop-filter: blur(8px);
+    }
+    .side-card strong {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .side-nav {
+      display: grid;
+      gap: 8px;
+    }
+    .side-nav a {
+      display: block;
+      padding: 9px 10px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      border: 1px solid transparent;
+    }
+    .side-nav a:hover {
+      background: #171717;
+      border-color: var(--line);
+      text-decoration: none;
+    }
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 800;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(40px, 5vw, 68px);
+      line-height: 0.94;
+      letter-spacing: -0.06em;
+      max-width: 12ch;
+      font-weight: 500;
+    }
+    h2 {
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      max-width: 18ch;
+      font-weight: 500;
+    }
+    h3 {
+      font-size: 21px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+    }
+    p, li {
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+    strong { color: var(--ink); }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      gap: 8px;
+    }
+    .intro {
+      display: grid;
+      gap: 18px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .lead {
+      font-size: 23px;
+      line-height: 1.55;
+      max-width: 38ch;
+    }
+    .section {
+      display: grid;
+      gap: 18px;
+    }
+    .prose {
+      display: grid;
+      gap: 16px;
+      max-width: 41em;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: var(--soft);
+      display: grid;
+      gap: 8px;
+    }
+    .mini {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 800;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .metric .value {
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .callout {
+      display: grid;
+      gap: 8px;
+      border-left: 2px solid var(--accent);
+      border-radius: 0;
+      background: transparent;
+      padding: 16px 18px;
+      max-width: 78ch;
+    }
+    .warn { background: var(--warn); border-left-color: #d4a200; }
+    .danger { background: var(--danger); border-left-color: #cf6a45; }
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .three {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .four {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--soft);
+      display: grid;
+      gap: 12px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .diagram {
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+    }
+    .diagram svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .node {
+      position: absolute;
+      width: 200px;
+      min-height: 96px;
+      padding: 16px;
+      border-radius: 8px;
+      background: #161616;
+      border: 1px solid var(--line);
+      box-shadow: none;
+      display: grid;
+      gap: 8px;
+    }
+    .node strong { font-size: 15px; }
+    .node small { color: var(--muted); line-height: 1.35; }
+    .node.core {
+      width: 240px;
+      min-height: 122px;
+      border: 1px solid #44591b;
+      background: #1a2110;
+      color: var(--ink);
+    }
+    .node.core small { color: #d8d4cb; }
+    .table-wrap {
+      width: 100%;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+    table {
+      width: 100%;
+      min-width: 900px;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #141414;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #171717;
+      color: var(--ink);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .sticky-col th:first-child,
+    .sticky-col td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #141414;
+      min-width: 170px;
+      max-width: 170px;
+    }
+    .sticky-col thead th:first-child {
+      z-index: 3;
+      background: #171717;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr td:last-child, tr th:last-child { border-right: none; }
+    .bars {
+      display: grid;
+      gap: 12px;
+      max-width: 780px;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 110px;
+      gap: 12px;
+      align-items: center;
+    }
+    .bar {
+      height: 15px;
+      border-radius: 999px;
+      background: #222222;
+      overflow: hidden;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .shot {
+      display: grid;
+      gap: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      padding: 16px;
+    }
+    .shot-frame {
+      height: 270px;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--soft-2);
+    }
+    .shot-frame img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .mid img { transform: translateY(-18%); }
+    .lower img { transform: translateY(-30%); }
+    .caption {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    .scatter {
+      position: relative;
+      min-height: 430px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(to right, transparent calc(50% - 1px), rgba(242,239,232,0.14) calc(50% - 1px), rgba(242,239,232,0.14) calc(50% + 1px), transparent calc(50% + 1px)),
+        linear-gradient(to top, transparent calc(50% - 1px), rgba(242,239,232,0.14) calc(50% - 1px), rgba(242,239,232,0.14) calc(50% + 1px), transparent calc(50% + 1px)),
+        #141414;
+      overflow: hidden;
+      padding: 22px;
+      max-width: 900px;
+    }
+    .scatter-label {
+      position: absolute;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .label-top { top: 12px; left: 50%; transform: translateX(-50%); }
+    .label-bottom { bottom: 12px; left: 50%; transform: translateX(-50%); }
+    .label-left {
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: left top;
+    }
+    .label-right {
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: right top;
+    }
+    .point {
+      position: absolute;
+      width: 134px;
+      display: grid;
+      gap: 6px;
+      text-align: center;
+      transform: translate(-50%, -50%);
+    }
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      margin: 0 auto;
+      background: #d8e9a7;
+      border: 3px solid #111111;
+      box-shadow: none;
+    }
+    .point strong {
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .point small {
+      font-size: 12px;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    .point.current .dot {
+      width: 18px;
+      height: 18px;
+      background: #cf6a45;
+    }
+    .foda {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 980px;
+    }
+    .foda .box {
+      border-radius: 8px;
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      border: 1px solid var(--line);
+    }
+    .f1, .f2, .f3, .f4 { background: var(--soft); }
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    @media (max-width: 1200px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: static;
+        order: -1;
+      }
+      .side-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 980px) {
+      .article { padding: 24px; }
+      .two, .three, .four, .metrics, .evidence-grid, .foda, .side-nav { grid-template-columns: 1fr; }
+      .diagram { min-height: 820px; }
+      .node { position: static; width: auto; margin: 10px; }
+      .diagram svg { display: none; }
+      .scatter { min-height: 620px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <article class="article">
+      <section class="intro" id="headline">
+        <div class="eyebrow">10Pines / Informe de análisis</div>
+        <h1>Análisis del ecosistema de 10Pines</h1>
+        <p class="lead"><strong>El análisis busca entender la estructura actual del sitio, el contenido que tiene, las secciones que aparecen, y los patrones y repeticiones que hoy organizan el ecosistema.</strong></p>
+        <div class="metrics">
+          <div class="metric"><span class="mini">URLs</span><span class="value">42</span><p>muestras representativas relevadas</p></div>
+          <div class="metric"><span class="mini">Hosts</span><span class="value">7</span><p>propiedades principales analizadas</p></div>
+          <div class="metric"><span class="mini">Patterns</span><span class="value">3</span><p>patrones dominantes del sistema</p></div>
+          <div class="metric"><span class="mini">Benchmarks</span><span class="value">10</span><p>cruce de negocio y marca</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="objetivo">
+        <div class="eyebrow">Objetivo del análisis</div>
+        <h2>Entender el estado actual para abrir la discusión de arquitectura</h2>
+        <div class="prose">
+          <p>Este análisis busca <strong>entender cómo está organizado hoy el ecosistema público de 10Pines</strong>, qué contenido y secciones tiene, qué patrones y repeticiones aparecen, y qué tensiones deja abiertas de cara a un futuro boceto de arquitectura con mejoras potenciales.</p>
+          <p>No es todavía una propuesta de solución. Es una lectura estructurada del estado actual para discutirla con el equipo y usarla como base de la siguiente etapa.</p>
+        </div>
+      </section>
+
+      <section class="section" id="ecosistema">
+        <div class="eyebrow">Ecosistema</div>
+        <h2>Un hub fuerte con satélites fuertes</h2>
+        <div class="diagram">
+          <svg viewBox="0 0 920 500" preserveAspectRatio="none">
+            <line x1="460" y1="240" x2="160" y2="92" stroke="#d0c7ba" stroke-width="2"/>
+            <line x1="460" y1="240" x2="760" y2="92" stroke="#d0c7ba" stroke-width="2"/>
+            <line x1="460" y1="240" x2="90" y2="304" stroke="#d0c7ba" stroke-width="2"/>
+            <line x1="460" y1="240" x2="760" y2="304" stroke="#d0c7ba" stroke-width="2"/>
+            <line x1="460" y1="240" x2="282" y2="402" stroke="#d0c7ba" stroke-width="2"/>
+            <line x1="460" y1="240" x2="638" y2="402" stroke="#d0c7ba" stroke-width="2"/>
+          </svg>
+          <div class="node core" style="left:340px;top:178px;">
+            <strong>www.10pines.com</strong>
+            <small>Hub principal: oferta, método, tecnología, proof y contacto.</small>
+          </div>
+          <div class="node" style="left:56px;top:44px;">
+            <strong>blog</strong>
+            <small>Expertise, thought leadership y autoridad editorial.</small>
+          </div>
+          <div class="node" style="left:666px;top:44px;">
+            <strong>cultura</strong>
+            <small>Manifiesto cultural y operating model.</small>
+          </div>
+          <div class="node" style="left:14px;top:266px;">
+            <strong>academia</strong>
+            <small>Discovery de training, cursos, webinars y contacto.</small>
+          </div>
+          <div class="node" style="left:690px;top:266px;">
+            <strong>cursos</strong>
+            <small>Catálogo, transacción y acceso a contenido.</small>
+          </div>
+          <div class="node" style="left:198px;top:370px;">
+            <strong>desarrolloagil</strong>
+            <small>Landing puntual de una oferta específica.</small>
+          </div>
+          <div class="node" style="left:548px;top:370px;">
+            <strong>press</strong>
+            <small>Reputación, prensa y referencias.</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="lectura-ecosistema">
+        <div class="eyebrow">Lectura del ecosistema</div>
+        <h2>El main site es sólido, pero el sistema no se comporta como “home + secciones”</h2>
+        <div class="prose">
+          <p><strong>El sitio principal funciona.</strong> Presenta bien a la empresa, combina oferta, método, tecnología, proof y contacto, y corrige la impresión inicial de que la propuesta comercial estaba ausente.</p>
+          <p><strong>La complejidad aparece después.</strong> Alrededor del main site hay varias superficies con roles reales, densidad propia y fronteras todavía poco explícitas. No se comporta como una homepage con secciones internas. Se comporta como un sistema de propiedades con funciones distintas.</p>
+        </div>
+        <div class="table-wrap sticky-col">
+          <table>
+            <thead>
+              <tr>
+                <th>Propiedad</th>
+                <th>Rol</th>
+                <th>Cantidad de URLs</th>
+                <th>Lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>www.10pines.com</code></td><td>Hub comercial principal</td><td>3</td><td>Concentra oferta, metodología, tecnología, proof y contacto.</td></tr>
+              <tr><td><code>blog.10pines.com</code></td><td>Hub editorial</td><td>9</td><td>Autoridad técnica y publishing sostenido.</td></tr>
+              <tr><td><code>cultura.10pines.com</code></td><td>Manifiesto cultural</td><td>3</td><td>Archivo fuerte de cultura y modelo operativo.</td></tr>
+              <tr><td><code>academia.10pines.com</code></td><td>Hub de training</td><td>14</td><td>La superficie más densa y amplia después del main site.</td></tr>
+              <tr><td><code>cursos.10pines.com</code></td><td>Capa transaccional</td><td>6</td><td>La cara más transaccional del learning stack.</td></tr>
+              <tr><td><code>desarrolloagil.10pines.com</code></td><td>Landing puntual</td><td>3</td><td>Oferta específica con lógica de campaña.</td></tr>
+              <tr><td><code>press.10pines.com</code></td><td>Activo reputacional</td><td>1</td><td>Superficie de soporte para media y referencias.</td></tr>
+              <tr><td><code>10pines.com</code></td><td>Duplicado canónico</td><td>3</td><td>Duplica la superficie principal y algunos assets.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="contenido-secciones">
+        <div class="eyebrow">Contenido y secciones</div>
+        <h2>Qué muestra cada superficie y qué parte del relato construye</h2>
+        <div class="prose">
+          <p><strong>El main site</strong> concentra oferta, método, tecnología, proof y contacto. <strong>El blog</strong> sostiene la capa de expertise. <strong>Cultura</strong> funciona como manifiesto. <strong>Academia</strong> y <strong>cursos</strong> estructuran la capa de learning, con distintos grados de discovery, transacción y consumo.</p>
+          <p>Mirado en conjunto, el ecosistema no solo cuenta “qué hace 10Pines”. También cuenta <strong>cómo piensa</strong>, <strong>cómo trabaja</strong> y <strong>cómo enseña</strong>. Eso es valioso, pero también hace más compleja la síntesis.</p>
+        </div>
+        <div class="table-wrap sticky-col">
+          <table>
+            <thead>
+              <tr>
+                <th>Sección / familia</th>
+                <th>Narrativa dominante</th>
+                <th>Proof</th>
+                <th>CTA</th>
+                <th>Solapamientos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Main site</td><td>Software partner, método, equipo, cultura</td><td>Sí</td><td>Sí</td><td>Cultura, proof y tecnología conviven juntos.</td></tr>
+              <tr><td>Blog</td><td>Expertise y thought leadership</td><td>Indirecto</td><td>Bajo</td><td>Se pisa con cultura y autoridad.</td></tr>
+              <tr><td>Cultura</td><td>Valores y operating model</td><td>Indirecto</td><td>Bajo</td><td>Se pisa con cues culturales del main site y blog.</td></tr>
+              <tr><td>Academia</td><td>Oferta formativa y autoridad docente</td><td>Sí</td><td>Sí</td><td>Se pisa con cursos y desarrolloagil.</td></tr>
+              <tr><td>Cursos</td><td>Compra y acceso a cursos</td><td>Sí</td><td>Sí</td><td>Se pisa con detalle y consumo en academia.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="exposicion">
+        <div class="eyebrow">Exposición</div>
+        <h2>Niveles de exposición: qué aparece primero y por qué importa</h2>
+        <div class="prose">
+          <p><strong>Exposición</strong> no significa solamente “qué está en el menú”. Acá se usa para medir qué tan visible, accesible y persistente es cada tema dentro del ecosistema.</p>
+          <p><strong>Importa</strong> porque cuando varias capas del sistema aparecen con exposición alta, dejan de ordenarse jerárquicamente y empiezan a competir por primacía.</p>
+        </div>
+        <div class="two">
+          <div class="card">
+            <h3>Cómo se midió</h3>
+            <ul>
+              <li><strong>Ubicación:</strong> header, hero, cuerpo o footer.</li>
+              <li><strong>Profundidad:</strong> cuántos clicks desde el entry point.</li>
+              <li><strong>Scroll:</strong> arriba del fold, mitad o scroll profundo.</li>
+              <li><strong>Persistencia:</strong> si aparece en desktop, mobile o varias superficies.</li>
+              <li><strong>Continuidad:</strong> si al entrar se sigue entendiendo el sistema.</li>
+              <li><strong>Vuelta:</strong> si hay camino claro de retorno.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Lectura</h3>
+            <p>El problema no es que un solo tema tenga demasiada exposición. El problema es que <strong>servicios, cultura, expertise y learning</strong> aparecen todos como capas importantes.</p>
+            <div class="callout warn">
+              <strong>Resultado</strong>
+              <p>El sistema se ve rico, pero no se ve comprimido.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><strong>Learning</strong><div class="bar"><span style="width:92%"></span></div><span>muy alta</span></div>
+          <div class="bar-row"><strong>Cultura</strong><div class="bar"><span style="width:88%"></span></div><span>alta</span></div>
+          <div class="bar-row"><strong>Expertise</strong><div class="bar"><span style="width:82%"></span></div><span>alta</span></div>
+          <div class="bar-row"><strong>Servicios</strong><div class="bar"><span style="width:72%"></span></div><span>alta</span></div>
+          <div class="bar-row"><strong>Contacto</strong><div class="bar"><span style="width:66%"></span></div><span>media-alta</span></div>
+          <div class="bar-row"><strong>Proof</strong><div class="bar"><span style="width:58%"></span></div><span>media</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="eyebrow">Exposición</div>
+        <h2>Detalle por tema</h2>
+        <div class="table-wrap sticky-col">
+          <table>
+            <thead>
+              <tr>
+                <th>Tema</th>
+                <th>Desktop</th>
+                <th>Mobile</th>
+                <th>Acceso desde entry point</th>
+                <th>Lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Servicios / software partner</td><td>Alta</td><td>Media</td><td>Directo desde el main site</td><td>Está presente y es real, pero convive con otras narrativas fuertes.</td></tr>
+              <tr><td>Proof / casos</td><td>Media</td><td>Media-baja</td><td>Home + PDFs</td><td>Existe, pero la forma más rica sigue bastante fuera del flujo nativo.</td></tr>
+              <tr><td>Cultura</td><td>Alta</td><td>Alta</td><td>Main cues + site de cultura + blog/culture</td><td>Es una de las capas más legibles del sistema.</td></tr>
+              <tr><td>Expertise</td><td>Alta</td><td>Media-alta</td><td>Blog y taxonomías editoriales</td><td>La autoridad editorial es consistente y sostenida.</td></tr>
+              <tr><td>Learning / training</td><td>Muy alta</td><td>Alta</td><td>academia + cursos + desarrolloagil</td><td>Muy visible, pero distribuido entre varias superficies.</td></tr>
+              <tr><td>Contacto</td><td>Alta</td><td>Media</td><td>Final del home y contacto en academia</td><td>Existe, pero suele aparecer después de bastante scroll narrativo.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="patrones">
+        <div class="eyebrow">Patrones</div>
+        <h2>Los 3 patrones que más estructuran el sistema</h2>
+        <div class="three">
+          <div class="card">
+            <span class="pill">Patrón 1</span>
+            <h3>Grillas y listados</h3>
+            <p>Aparecen en main site, blog, academia y cursos. Sirven para discovery, categorización, proof surfacing y browsing editorial.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Patrón 2</span>
+            <h3>Secciones explicativas largas</h3>
+            <p>Aparecen en home, cultura y academia. Comunican profundidad y criterio, pero también alargan la lectura.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Patrón 3</span>
+            <h3>Módulos de CTA / conversión</h3>
+            <p>Existen en main, academia y cursos, con más claridad en learning que en la oferta de servicios.</p>
+          </div>
+        </div>
+        <div class="table-wrap sticky-col">
+          <table>
+            <thead>
+              <tr>
+                <th>Superficie</th>
+                <th>Patrón</th>
+                <th>Objetivo aparente</th>
+                <th>Rol en contexto</th>
+                <th>Qué comunica</th>
+                <th>Observaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>www.10pines.com</code></td><td>Hero fuerte</td><td>Presentar propuesta</td><td>Intro de marca + oferta</td><td>Partner técnico con identidad</td><td>Memorable, aunque la compresión comercial podría ser más directa.</td></tr>
+              <tr><td><code>www.10pines.com</code></td><td>Franja de portfolio / proof</td><td>Mostrar trabajo real</td><td>Proof</td><td>Experiencia de delivery</td><td>Correcto, aunque más liviano que un sistema nativo de casos.</td></tr>
+              <tr><td><code>blog.10pines.com</code></td><td>Grid editorial</td><td>Ordenar contenido</td><td>Organización editorial</td><td>Expertise sostenido</td><td>Muy buen fit entre forma y función.</td></tr>
+              <tr><td><code>cultura.10pines.com/en</code></td><td>Layout manifiesto</td><td>Codificar valores</td><td>Brand signaling</td><td>Cultura como sistema operativo</td><td>Diferenciador fuerte, separado del flujo comercial.</td></tr>
+              <tr><td><code>academia.10pines.com</code></td><td>Cards de cursos</td><td>Superficiar oferta</td><td>Discovery</td><td>Academia activa y amplia</td><td>Patrón correcto, pero con demasiados módulos adyacentes.</td></tr>
+              <tr><td><code>cursos.10pines.com/p/...</code></td><td>Ficha transaccional</td><td>Convertir</td><td>Conversion support</td><td>Producto formativo</td><td>Claro, aunque duplica parte de la lógica de academia.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="evidencia">
+        <div class="eyebrow">Evidencia visual</div>
+        <h2>Recortes concretos para entender de qué se habla</h2>
+        <div class="prose">
+          <p>En esta versión conviene usar las capturas como <strong>evidencia puntual</strong>, no como página entera. El recorte tiene que ayudar a ver el bloque relevante y, al lado, citar la URL para que cualquiera pueda entrar y verlo por sí mismo.</p>
+        </div>
+        <div class="evidence-grid">
+          <article class="shot">
+            <div class="shot-frame mid">
+              <img src="assets/main-home.png" alt="Main home" />
+            </div>
+            <div class="caption">
+              <strong>Main home.</strong> Conviene mostrar un poco más abajo del hero para que se vea mejor cómo conviven oferta, proof y narrativa de marca.
+              <br />
+              URL: <a href="https://www.10pines.com/">https://www.10pines.com/</a>
+            </div>
+          </article>
+          <article class="shot">
+            <div class="shot-frame lower">
+              <img src="assets/blog-home.png" alt="Blog home" />
+            </div>
+            <div class="caption">
+              <strong>Blog.</strong> Acá importa más ver la estructura de listado que el hero: el blog se comporta como sistema editorial real.
+              <br />
+              URL: <a href="https://blog.10pines.com/">https://blog.10pines.com/</a>
+            </div>
+          </article>
+          <article class="shot">
+            <div class="shot-frame mid">
+              <img src="assets/culture-home.png" alt="Culture manifesto" />
+            </div>
+            <div class="caption">
+              <strong>Manifiesto cultural.</strong> Conviene mostrar mejor el cuerpo del contenido para que se lea como documento centrado y no solo como portada.
+              <br />
+              URL: <a href="https://cultura.10pines.com/en">https://cultura.10pines.com/en</a>
+            </div>
+          </article>
+          <article class="shot">
+            <div class="shot-frame lower">
+              <img src="assets/academy-home.png" alt="Academia home" />
+            </div>
+            <div class="caption">
+              <strong>Academia.</strong> El valor acá no está en el hero, sino en ver catálogo, videos, prueba y densidad de oferta.
+              <br />
+              URL: <a href="https://academia.10pines.com/">https://academia.10pines.com/</a>
+            </div>
+          </article>
+        </div>
+        <div class="callout warn">
+          <strong>Siguiente mejora de imágenes</strong>
+          <p>La próxima pasada ideal sería recapturar selectivamente a 2x y por bloque relevante, en vez de depender de full-page screenshots.</p>
+        </div>
+      </section>
+
+      <section class="section" id="mensajes">
+        <div class="eyebrow">Distribución de mensajes</div>
+        <h2>Qué comunica más fuerte el sistema</h2>
+        <div class="prose">
+          <p><strong>Message distribution</strong> mide el peso relativo de cada capa narrativa en el conjunto del ecosistema. Sirve para ver si el sistema explica primero lo que el negocio vende o si otras capas quedan más legibles.</p>
+          <p>Hoy el ecosistema deja una impresión especialmente fuerte de <strong>cultura</strong>, <strong>expertise</strong> y <strong>learning</strong>.</p>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><strong>Cultura</strong><div class="bar"><span style="width:90%"></span></div><span>dominante</span></div>
+          <div class="bar-row"><strong>Learning</strong><div class="bar"><span style="width:86%"></span></div><span>dominante</span></div>
+          <div class="bar-row"><strong>Expertise</strong><div class="bar"><span style="width:84%"></span></div><span>dominante</span></div>
+          <div class="bar-row"><strong>Servicios</strong><div class="bar"><span style="width:70%"></span></div><span>visible</span></div>
+          <div class="bar-row"><strong>Proof</strong><div class="bar"><span style="width:61%"></span></div><span>presente</span></div>
+        </div>
+        <div class="callout">
+          <strong>Lectura</strong>
+          <p>Lo que más resalta es que 10Pines se percibe como una empresa interesante, profunda y técnicamente seria. Lo que queda menos comprimido es la lectura de una oferta de software partner claramente empaquetada.</p>
+        </div>
+      </section>
+
+      <section class="section" id="duplicacion">
+        <div class="eyebrow">Duplicaciones y solapamientos</div>
+        <h2>Qué está duplicado y qué se pisa parcialmente</h2>
+        <div class="three">
+          <div class="card">
+            <span class="pill">Duplicación exacta</span>
+            <h3>Canónicos y assets</h3>
+            <p><code>10pines.com</code> y <code>www.10pines.com</code> sirven la misma superficie principal y los mismos PDFs.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Solapamiento estructural</span>
+            <h3>Learning stack</h3>
+            <p><code>academia</code>, <code>cursos</code> y <code>desarrolloagil</code> cubren discovery, detail, transaction y consumption con fronteras débiles.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Solapamiento narrativo</span>
+            <h3>Cultura</h3>
+            <p><code>cultura</code> y <code>blog/culture</code> hablan del mismo territorio desde lógicas distintas: manifiesto vs stream editorial.</p>
+          </div>
+        </div>
+        <div class="table-wrap sticky-col">
+          <table>
+            <thead>
+              <tr>
+                <th>Elemento</th>
+                <th>URL 1</th>
+                <th>URL 2</th>
+                <th>Tipo</th>
+                <th>Qué denota</th>
+                <th>Riesgo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Main domain</td><td><code>www.10pines.com</code></td><td><code>10pines.com</code></td><td>Estructural</td><td>Dos canones para la misma superficie</td><td>Ambigüedad canónica.</td></tr>
+              <tr><td>Proof en PDF</td><td><code>www.10pines.com/brochure_en.pdf</code></td><td><code>10pines.com/brochure_en.pdf</code></td><td>Estructural</td><td>Proof duplicado como archivo</td><td>Menor continuidad nativa.</td></tr>
+              <tr><td>Catálogo de training</td><td><code>academia/show_courses</code></td><td><code>cursos/l/products</code></td><td>Estructural + narrativa</td><td>Dos entry points parecidos</td><td>Discovery dividido.</td></tr>
+              <tr><td>Detalle de curso</td><td><code>academia/courses/...</code></td><td><code>cursos/p/...</code></td><td>Estructural</td><td>Más de una lógica de course detail</td><td>Ownership distribuido.</td></tr>
+              <tr><td>Historia cultural</td><td><code>cultura/en</code></td><td><code>blog/culture</code></td><td>Narrativo</td><td>Cultura partida entre canon y stream</td><td>La referencia principal de cultura pierde fuerza.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout danger">
+          <strong>Lectura</strong>
+          <p>El sistema es fácil de admirar, pero más difícil de resumir. Eso no viene de falta de contenido sino de la suma de canones simultáneos.</p>
+        </div>
+      </section>
+
+      <section class="section" id="tensiones-estructurales">
+        <div class="eyebrow">Tensiones estructurales del ecosistema</div>
+        <h2>Qué dificulta hoy una lectura más clara del sistema</h2>
+        <div class="prose">
+          <p><strong>La primera tensión</strong> es que varias propiedades cumplen funciones reales y maduras al mismo tiempo. El sistema no tiene satélites débiles: tiene satélites potentes.</p>
+          <p><strong>La segunda</strong> es que la capa de learning reparte discovery, detail, transacción y consumo entre varias superficies. <strong>La tercera</strong> es que parte del proof más rico sigue saliendo del flujo nativo hacia archivos o assets.</p>
+          <p><strong>La cuarta</strong> es que la arquitectura no siempre deja claro qué es core, qué es soporte y qué es expansión narrativa del core.</p>
+        </div>
+      </section>
+
+      <section class="section" id="foda">
+        <div class="eyebrow">FODA</div>
+        <h2>Lectura estratégica resumida</h2>
+        <div class="foda">
+          <div class="box f1">
+            <h3>Fortalezas</h3>
+            <ul>
+              <li>Main site sólido.</li>
+              <li>Cultura realmente diferenciadora.</li>
+              <li>Autoridad editorial sostenida.</li>
+              <li>Capa educativa madura.</li>
+            </ul>
+          </div>
+          <div class="box f2">
+            <h3>Debilidades</h3>
+            <ul>
+              <li>Ecosistema fragmentado.</li>
+              <li>Learning distribuido en demasiadas superficies.</li>
+              <li>Proof parcialmente externalizado en PDFs.</li>
+              <li>Síntesis comercial menos comprimida que la profundidad.</li>
+            </ul>
+          </div>
+          <div class="box f3">
+            <h3>Oportunidades</h3>
+            <ul>
+              <li>Aclarar roles por propiedad.</li>
+              <li>Consolidar proof como sistema nativo.</li>
+              <li>Ordenar academia vs cursos.</li>
+              <li>Comprimir mejor la narrativa de partner software.</li>
+            </ul>
+          </div>
+          <div class="box f4">
+            <h3>Amenazas</h3>
+            <ul>
+              <li>Que el usuario admire el sistema pero no lo sintetice.</li>
+              <li>Que cultura y learning ganen más claridad que la oferta core.</li>
+              <li>Que competidores más compactos se entiendan más rápido.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="tension">
+        <div class="eyebrow">Tensión de posicionamiento</div>
+        <h2>Matriz de tensión: dónde parece quedar 10Pines hoy</h2>
+        <div class="prose">
+          <p>Esta matriz no busca definir una solución. Busca <strong>mostrar la tensión actual</strong>.</p>
+          <p><strong>Eje X:</strong> legibilidad comercial, de difusa a clara. <strong>Eje Y:</strong> fuerza de la capa cultural/editorial, de baja a dominante.</p>
+        </div>
+        <div class="scatter">
+          <div class="scatter-label label-top">Más fuerza cultural / editorial</div>
+          <div class="scatter-label label-bottom">Menos fuerza cultural / editorial</div>
+          <div class="scatter-label label-left">Más difuso comercialmente</div>
+          <div class="scatter-label label-right">Más claro comercialmente</div>
+
+          <div class="point current" style="left:38%;top:28%;">
+            <div class="dot"></div>
+            <strong>10Pines hoy</strong>
+            <small>muy fuerte en cultura/expertise, claridad comercial media</small>
+          </div>
+          <div class="point" style="left:74%;top:64%;">
+            <div class="dot"></div>
+            <strong>BairesDev</strong>
+            <small>más compacto y directo</small>
+          </div>
+          <div class="point" style="left:62%;top:54%;">
+            <div class="dot"></div>
+            <strong>redbee</strong>
+            <small>wedge más claro + proof</small>
+          </div>
+          <div class="point" style="left:58%;top:38%;">
+            <div class="dot"></div>
+            <strong>8th Light</strong>
+            <small>craft premium más comprimido</small>
+          </div>
+          <div class="point" style="left:69%;top:34%;">
+            <div class="dot"></div>
+            <strong>Somnio</strong>
+            <small>especialización muy legible</small>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Lectura</strong>
+          <p>Hoy 10Pines parece quedar en una zona de <strong>alta fuerza cultural/editorial</strong> y <strong>legibilidad comercial media</strong>. La discusión abierta no es si hay que bajar cultura, sino cómo se ordena esa fuerza en relación con la claridad del core comercial.</p>
+        </div>
+      </section>
+
+      <section class="section" id="benchmark">
+        <div class="eyebrow">Lectura de benchmarks</div>
+        <h2>Hallazgos útiles que dejan los benchmarks</h2>
+        <div class="three">
+          <div class="card">
+            <span class="pill">Hallazgo 1</span>
+            <h3>Los benchmarks de negocio muestran mejor compresión</h3>
+            <p>Empujan a que se entienda más rápido <strong>qué vende</strong>, <strong>para quién</strong> y <strong>con qué prueba</strong>.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Hallazgo 2</span>
+            <h3>La cultura es un activo real</h3>
+            <p>Los referentes culturales ayudan a explicar por qué esta capa pesa tanto en 10Pines y también muestran el riesgo de que gane demasiada precedencia sobre la oferta.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Hallazgo 3</span>
+            <h3>La tensión relevante no es solo escala vs boutique</h3>
+            <p>Lo que más ayuda a leer este caso es el contraste entre <strong>claridad de propuesta</strong> y <strong>riqueza del ecosistema</strong>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="preguntas">
+        <div class="eyebrow">Preguntas abiertas</div>
+        <h2>Qué conviene discutir con el equipo</h2>
+        <div class="four">
+          <div class="card">
+            <span class="pill">Q1</span>
+            <h3>Qué debería entender primero un prospecto</h3>
+            <p>¿Software partner? ¿Empresa culturalmente singular? ¿Ambas, pero en qué orden?</p>
+          </div>
+          <div class="card">
+            <span class="pill">Q2</span>
+            <h3>Quién es el owner canónico del learning stack</h3>
+            <p>¿Academia discovery y cursos transaction? ¿O hoy ambas compiten?</p>
+          </div>
+          <div class="card">
+            <span class="pill">Q3</span>
+            <h3>Dónde debería vivir el proof más fuerte</h3>
+            <p>¿Dentro del main site? ¿En cases nativos? ¿O en PDFs secundarios?</p>
+          </div>
+          <div class="card">
+            <span class="pill">Q4</span>
+            <h3>Qué rol exacto juega cultura en el funnel</h3>
+            <p>¿Refuerzo de confianza? ¿Diferenciación? ¿Canon independiente?</p>
+          </div>
+        </div>
+        <div class="foot">
+          <span>Evidencia cruda: <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/site-map.md">site-map.md</a>, <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/site-map.json">site-map.json</a>, <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots">screenshots</a>.</span>
+          <span>Base analítica: <a href="/Users/julianpasquale/Downloads/10pines/10PINES_MASTER_REPORT_V3.md">10PINES_MASTER_REPORT_V3.md</a></span>
+        </div>
+      </section>
+    </article>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <strong>Índice</strong>
+        <nav class="side-nav">
+          <a href="#headline">Headline</a>
+          <a href="#objetivo">Objetivo</a>
+          <a href="#ecosistema">Ecosistema</a>
+          <a href="#lectura-ecosistema">Lectura del ecosistema</a>
+          <a href="#contenido-secciones">Contenido y secciones</a>
+          <a href="#exposicion">Exposición</a>
+          <a href="#patrones">Patrones</a>
+          <a href="#evidencia">Evidencia visual</a>
+          <a href="#mensajes">Distribución de mensajes</a>
+          <a href="#duplicacion">Duplicaciones y solapamientos</a>
+          <a href="#tensiones-estructurales">Tensiones estructurales</a>
+          <a href="#foda">FODA</a>
+          <a href="#tension">Tensión de posicionamiento</a>
+          <a href="#benchmark">Lectura de benchmarks</a>
+          <a href="#preguntas">Preguntas abiertas</a>
+        </nav>
+      </div>
+      <div class="side-card">
+        <strong>Lectura rápida</strong>
+        <p>El main site está bien. La fricción aparece cuando varias capas del ecosistema son fuertes al mismo tiempo y compiten por primacía.</p>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

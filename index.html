@@ -264,6 +264,44 @@
       gap: 20px;
       max-width: 860px;
     }
+    .map-figure {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      padding: 18px;
+      overflow: hidden;
+    }
+    .map-figure svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .map-label {
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      fill: #221f1a;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .map-sub {
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      fill: #6e665d;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .map-line {
+      stroke: #d7d0c5;
+      stroke-width: 1.5;
+    }
+    .map-node {
+      fill: #fbfaf7;
+      stroke: #d8d1c6;
+      stroke-width: 1.25;
+    }
+    .map-node-core {
+      fill: #f4efe6;
+      stroke: #cfc6b7;
+      stroke-width: 1.5;
+    }
     .tree-root {
       border: 1px solid var(--line);
       border-radius: 6px;
@@ -669,6 +707,50 @@
           <p><strong>Partiendo desde <code>www.10pines.com</code></strong>, el sistema no baja solamente a secciones internas: deriva a propiedades con identidad propia. Por eso conviene leerlo como un `L1 / L2` actual, no solo como “home + páginas”.</p>
         </div>
         <div class="tree-flow">
+          <figure class="map-figure">
+            <svg viewBox="0 0 820 360" role="img" aria-label="Mapa del ecosistema público de 10Pines">
+              <line class="map-line" x1="410" y1="124" x2="145" y2="58" />
+              <line class="map-line" x1="410" y1="124" x2="410" y2="40" />
+              <line class="map-line" x1="410" y1="124" x2="675" y2="58" />
+              <line class="map-line" x1="410" y1="124" x2="105" y2="270" />
+              <line class="map-line" x1="410" y1="124" x2="290" y2="270" />
+              <line class="map-line" x1="410" y1="124" x2="530" y2="270" />
+              <line class="map-line" x1="410" y1="124" x2="715" y2="270" />
+
+              <rect class="map-node" x="60" y="26" rx="8" ry="8" width="170" height="58" />
+              <text class="map-label" x="78" y="50">blog.10pines.com</text>
+              <text class="map-sub" x="78" y="69">expertise y autoridad editorial</text>
+
+              <rect class="map-node" x="315" y="12" rx="8" ry="8" width="190" height="72" />
+              <text class="map-label" x="338" y="39">www.10pines.com</text>
+              <text class="map-sub" x="338" y="58">oferta, método, tecnología,</text>
+              <text class="map-sub" x="338" y="72">proof y contacto</text>
+
+              <rect class="map-node" x="590" y="26" rx="8" ry="8" width="170" height="58" />
+              <text class="map-label" x="612" y="50">cultura.10pines.com</text>
+              <text class="map-sub" x="612" y="69">manifiesto y operating model</text>
+
+              <rect class="map-node-core" x="300" y="98" rx="10" ry="10" width="220" height="70" />
+              <text class="map-label" x="334" y="127">home actual</text>
+              <text class="map-sub" x="334" y="146">punto de entrada más claro del sistema</text>
+
+              <rect class="map-node" x="24" y="238" rx="8" ry="8" width="164" height="58" />
+              <text class="map-label" x="46" y="262">academia.10pines.com</text>
+              <text class="map-sub" x="46" y="281">discovery de learning</text>
+
+              <rect class="map-node" x="208" y="238" rx="8" ry="8" width="164" height="58" />
+              <text class="map-label" x="233" y="262">cursos.10pines.com</text>
+              <text class="map-sub" x="233" y="281">transacción y consumo</text>
+
+              <rect class="map-node" x="448" y="238" rx="8" ry="8" width="164" height="58" />
+              <text class="map-label" x="468" y="262">desarrolloagil</text>
+              <text class="map-sub" x="468" y="281">landing puntual de oferta</text>
+
+              <rect class="map-node" x="632" y="238" rx="8" ry="8" width="164" height="58" />
+              <text class="map-label" x="690" y="262">press</text>
+              <text class="map-sub" x="656" y="281">soporte reputacional</text>
+            </svg>
+          </figure>
           <div class="tree-root">
             <strong><code>www.10pines.com</code> como punto de partida</strong>
             <p>Desde la home actual se abre un árbol de propiedades que organizan distintas capas del relato: oferta, expertise, cultura, learning y reputación.</p>

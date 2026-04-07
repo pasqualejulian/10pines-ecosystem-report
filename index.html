@@ -39,29 +39,37 @@
       color: #2e2922;
     }
     .layout {
-      width: min(1380px, calc(100vw - 32px));
-      margin: 24px auto 80px;
+      width: min(1240px, calc(100vw - 48px));
+      margin: 28px auto 96px;
       display: grid;
-      grid-template-columns: 220px minmax(0, 980px);
-      gap: 40px;
+      grid-template-columns: 160px minmax(0, 860px);
+      gap: 64px;
       align-items: start;
+      justify-content: center;
     }
     .article {
+      grid-column: 2;
+      grid-row: 1;
+      min-width: 0;
       background: transparent;
       border: none;
       border-radius: 0;
       box-shadow: none;
-      padding: 24px 24px 40px 0;
+      padding: 20px 0 40px;
       display: grid;
       gap: 42px;
     }
     .sidebar {
+      grid-column: 1;
+      grid-row: 1;
+      width: 160px;
       position: sticky;
-      top: 20px;
+      top: 28px;
       display: grid;
-      gap: 18px;
+      gap: 10px;
       align-self: start;
-      padding-top: 8px;
+      justify-self: start;
+      padding-top: 12px;
     }
     .side-card {
       background: transparent;
@@ -74,7 +82,7 @@
       backdrop-filter: none;
     }
     .side-card strong {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
@@ -82,7 +90,8 @@
     }
     .side-nav {
       display: grid;
-      gap: 8px;
+      gap: 6px;
+      justify-items: start;
     }
     .side-nav a {
       display: block;
@@ -90,9 +99,10 @@
       border-radius: 0;
       background: transparent;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
+      font-size: 12px;
+      line-height: 1.45;
       border: none;
+      white-space: normal;
     }
     .side-nav a:hover {
       background: transparent;
@@ -247,6 +257,83 @@
       border-radius: 6px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.42);
+    }
+    .tree-flow {
+      display: grid;
+      gap: 20px;
+      max-width: 860px;
+    }
+    .tree-root {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      padding: 20px 22px;
+      display: grid;
+      gap: 14px;
+    }
+    .tree-root strong {
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .tree-root p {
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 56ch;
+    }
+    .tree-branches {
+      display: grid;
+      gap: 10px;
+      padding-left: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .tree-branches li {
+      display: grid;
+      gap: 4px;
+      padding-left: 16px;
+      border-left: 1px solid var(--line);
+    }
+    .tree-branches li strong {
+      font-size: 14px;
+      line-height: 1.3;
+    }
+    .tree-branches li small {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+    .tree-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      max-width: 860px;
+    }
+    .tree-card {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .tree-card h3 {
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+    .tree-card code {
+      width: fit-content;
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 3px 8px;
+    }
+    .tree-list {
+      display: grid;
+      gap: 8px;
+      padding-left: 16px;
+      margin: 0;
+    }
+    .tree-list li {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
     }
     .diagram svg {
       position: absolute;
@@ -477,18 +564,26 @@
     @media (max-width: 1200px) {
       .layout {
         grid-template-columns: 1fr;
+        width: min(100vw - 24px, 920px);
+        gap: 28px;
       }
       .sidebar {
         position: static;
         order: -1;
+        grid-column: 1;
+        width: auto;
       }
       .side-nav {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+      .article {
+        grid-column: 1;
+        padding: 0;
+      }
     }
     @media (max-width: 980px) {
       .article { padding: 24px; }
-      .two, .three, .four, .metrics, .evidence-grid, .foda, .side-nav { grid-template-columns: 1fr; }
+      .two, .three, .four, .metrics, .evidence-grid, .foda, .side-nav, .tree-grid { grid-template-columns: 1fr; }
       .diagram { min-height: 820px; }
       .node { position: static; width: auto; margin: 10px; }
       .diagram svg { display: none; }
@@ -523,42 +618,80 @@
       <section class="section" id="ecosistema">
         <div class="eyebrow">Ecosistema</div>
         <h2>Un hub fuerte con satélites fuertes</h2>
-        <div class="diagram">
-          <svg viewBox="0 0 920 500" preserveAspectRatio="none">
-            <line x1="460" y1="240" x2="160" y2="92" stroke="#d0c7ba" stroke-width="2"/>
-            <line x1="460" y1="240" x2="760" y2="92" stroke="#d0c7ba" stroke-width="2"/>
-            <line x1="460" y1="240" x2="90" y2="304" stroke="#d0c7ba" stroke-width="2"/>
-            <line x1="460" y1="240" x2="760" y2="304" stroke="#d0c7ba" stroke-width="2"/>
-            <line x1="460" y1="240" x2="282" y2="402" stroke="#d0c7ba" stroke-width="2"/>
-            <line x1="460" y1="240" x2="638" y2="402" stroke="#d0c7ba" stroke-width="2"/>
-          </svg>
-          <div class="node core" style="left:340px;top:178px;">
-            <strong>www.10pines.com</strong>
-            <small>Hub principal: oferta, método, tecnología, proof y contacto.</small>
+        <div class="tree-flow">
+          <div class="tree-root">
+            <strong><code>www.10pines.com</code> como punto de partida</strong>
+            <p>Partiendo desde la home, el ecosistema se abre hacia varias capas públicas con entidad propia. El sitio principal actúa como hub, pero no absorbe todo: deriva hacia propiedades con roles y densidades distintas.</p>
+            <ul class="tree-branches">
+              <li><strong>Servicios / método / tecnología / contacto</strong><small>vive principalmente en el main site y organiza la lectura comercial base.</small></li>
+              <li><strong>Blog</strong><small>extiende expertise y autoridad editorial.</small></li>
+              <li><strong>Cultura</strong><small>externaliza el manifiesto cultural y el operating model.</small></li>
+              <li><strong>Academia + Cursos + Desarrollo Ágil</strong><small>abren la capa de learning entre discovery, detalle, transacción y consumo.</small></li>
+              <li><strong>Press</strong><small>funciona como soporte reputacional.</small></li>
+            </ul>
           </div>
-          <div class="node" style="left:56px;top:44px;">
-            <strong>blog</strong>
-            <small>Expertise, thought leadership y autoridad editorial.</small>
-          </div>
-          <div class="node" style="left:666px;top:44px;">
-            <strong>cultura</strong>
-            <small>Manifiesto cultural y operating model.</small>
-          </div>
-          <div class="node" style="left:14px;top:266px;">
-            <strong>academia</strong>
-            <small>Discovery de training, cursos, webinars y contacto.</small>
-          </div>
-          <div class="node" style="left:690px;top:266px;">
-            <strong>cursos</strong>
-            <small>Catálogo, transacción y acceso a contenido.</small>
-          </div>
-          <div class="node" style="left:198px;top:370px;">
-            <strong>desarrolloagil</strong>
-            <small>Landing puntual de una oferta específica.</small>
-          </div>
-          <div class="node" style="left:548px;top:370px;">
-            <strong>press</strong>
-            <small>Reputación, prensa y referencias.</small>
+          <div class="tree-grid">
+            <article class="tree-card">
+              <h3>Main site</h3>
+              <code>www.10pines.com</code>
+              <ul class="tree-list">
+                <li>Home</li>
+                <li>Oferta de software partner</li>
+                <li>Método / cultura / tecnología</li>
+                <li>Proof y PDFs</li>
+                <li>Contacto</li>
+              </ul>
+            </article>
+            <article class="tree-card">
+              <h3>Blog</h3>
+              <code>blog.10pines.com</code>
+              <ul class="tree-list">
+                <li>Blog home</li>
+                <li>Categorías y tags</li>
+                <li>Article detail</li>
+                <li>Author / archives</li>
+                <li>Disclaimer / páginas auxiliares</li>
+              </ul>
+            </article>
+            <article class="tree-card">
+              <h3>Cultura</h3>
+              <code>cultura.10pines.com</code>
+              <ul class="tree-list">
+                <li>Manifiesto en inglés</li>
+                <li>Protocolo en español</li>
+                <li>Variantes idiomáticas</li>
+              </ul>
+            </article>
+            <article class="tree-card">
+              <h3>Academia</h3>
+              <code>academia.10pines.com</code>
+              <ul class="tree-list">
+                <li>Academy home</li>
+                <li>Catálogo / show courses</li>
+                <li>Course detail</li>
+                <li>Webinars y videos</li>
+                <li>Contacto y registro</li>
+                <li>Course contents</li>
+              </ul>
+            </article>
+            <article class="tree-card">
+              <h3>Cursos</h3>
+              <code>cursos.10pines.com</code>
+              <ul class="tree-list">
+                <li>Catalog / products</li>
+                <li>Product detail</li>
+                <li>Lecture / consumo</li>
+                <li>Sign in</li>
+              </ul>
+            </article>
+            <article class="tree-card">
+              <h3>Superficies de soporte</h3>
+              <code>desarrolloagil + press</code>
+              <ul class="tree-list">
+                <li><code>desarrolloagil</code>: landing puntual de oferta</li>
+                <li><code>press</code>: reputación y prensa</li>
+              </ul>
+            </article>
           </div>
         </div>
       </section>
@@ -740,7 +873,7 @@
         <div class="evidence-grid">
           <article class="shot">
             <div class="shot-frame mid">
-              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/www.10pines.com/index.png" alt="Main home" />
+              <img src="assets/main-home.png" alt="Main home" />
             </div>
             <div class="caption">
               <strong>Main home.</strong> Conviene mostrar un poco más abajo del hero para que se vea mejor cómo conviven oferta, proof y narrativa de marca.
@@ -750,7 +883,7 @@
           </article>
           <article class="shot">
             <div class="shot-frame lower">
-              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/blog.10pines.com/index.png" alt="Blog home" />
+              <img src="assets/blog-home.png" alt="Blog home" />
             </div>
             <div class="caption">
               <strong>Blog.</strong> Acá importa más ver la estructura de listado que el hero: el blog se comporta como sistema editorial real.
@@ -760,7 +893,7 @@
           </article>
           <article class="shot">
             <div class="shot-frame mid">
-              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/cultura.10pines.com/en.png" alt="Culture manifesto" />
+              <img src="assets/culture-home.png" alt="Culture manifesto" />
             </div>
             <div class="caption">
               <strong>Manifiesto cultural.</strong> Conviene mostrar mejor el cuerpo del contenido para que se lea como documento centrado y no solo como portada.
@@ -770,7 +903,7 @@
           </article>
           <article class="shot">
             <div class="shot-frame lower">
-              <img src="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots/desktop/academia.10pines.com/index.png" alt="Academia home" />
+              <img src="assets/academy-home.png" alt="Academia home" />
             </div>
             <div class="caption">
               <strong>Academia.</strong> El valor acá no está en el hero, sino en ver catálogo, videos, prueba y densidad de oferta.
@@ -1023,10 +1156,6 @@
           <a href="#benchmark">Lectura de benchmarks</a>
           <a href="#preguntas">Preguntas abiertas</a>
         </nav>
-      </div>
-      <div class="side-card">
-        <strong>Lectura rápida</strong>
-        <p>El main site está bien. La fricción aparece cuando varias capas del ecosistema son fuertes al mismo tiempo y compiten por primacía.</p>
       </div>
     </aside>
   </div>

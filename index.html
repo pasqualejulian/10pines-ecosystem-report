@@ -433,7 +433,45 @@
       display: block;
       height: 100%;
       border-radius: 999px;
-      background: var(--accent-dark);
+      background: #7f7a73;
+    }
+    .bar-row.level-very-high span { background: #b45f3c; }
+    .bar-row.level-high span { background: #8a7b2d; }
+    .bar-row.level-med-high span { background: #5f7391; }
+    .bar-row.level-medium span { background: #8a837b; }
+    .bar-row.level-very-high strong,
+    .bar-row.level-very-high span + span { color: #9c4c2b; }
+    .bar-row.level-high strong,
+    .bar-row.level-high span + span { color: #6f6323; }
+    .bar-row.level-med-high strong,
+    .bar-row.level-med-high span + span { color: #4b5e7a; }
+    .bar-row.level-medium strong,
+    .bar-row.level-medium span + span { color: #6f6860; }
+    .tree-table table {
+      min-width: 0;
+    }
+    .tree-table th,
+    .tree-table td {
+      font-size: 14px;
+    }
+    .tree-table td:first-child {
+      width: 24%;
+    }
+    .tree-table td:nth-child(2) {
+      width: 32%;
+    }
+    .dup-table table {
+      min-width: 0;
+      table-layout: fixed;
+    }
+    .dup-table col.url-col {
+      width: 16%;
+    }
+    .dup-table col.type-col {
+      width: 13%;
+    }
+    .dup-table col.read-col {
+      width: 27.5%;
     }
     .evidence-grid {
       display: grid;
@@ -546,11 +584,9 @@
       display: grid;
       gap: 12px;
       border: 1px solid var(--line);
+      background: white;
     }
-    .f1 { background: #f2f7e7; }
-    .f2 { background: #fff0e4; }
-    .f3 { background: #eef3fa; }
-    .f4 { background: #f8ece6; }
+    .f1, .f2, .f3, .f4 { background: white; }
     .foot {
       display: flex;
       justify-content: space-between;
@@ -600,12 +636,6 @@
         <div class="eyebrow">10Pines / Informe de análisis</div>
         <h1>Análisis del ecosistema de 10Pines</h1>
         <p class="lead"><strong>El análisis busca entender la estructura actual del sitio, el contenido que tiene, las secciones que aparecen, y los patrones y repeticiones que hoy organizan el ecosistema.</strong></p>
-        <div class="metrics">
-          <div class="metric"><span class="mini">URLs</span><span class="value">42</span><p>muestras representativas relevadas</p></div>
-          <div class="metric"><span class="mini">Hosts</span><span class="value">7</span><p>propiedades principales analizadas</p></div>
-          <div class="metric"><span class="mini">Patterns</span><span class="value">3</span><p>patrones dominantes del sistema</p></div>
-          <div class="metric"><span class="mini">Benchmarks</span><span class="value">10</span><p>cruce de negocio y marca</p></div>
-        </div>
       </section>
 
       <section class="section" id="objetivo">
@@ -619,11 +649,14 @@
 
       <section class="section" id="ecosistema">
         <div class="eyebrow">Ecosistema</div>
-        <h2>Un hub fuerte con satélites fuertes</h2>
+        <h2>Tree map actual del ecosistema</h2>
+        <div class="prose">
+          <p><strong>Partiendo desde <code>www.10pines.com</code></strong>, el sistema no baja solamente a secciones internas: deriva a propiedades con identidad propia. Por eso conviene leerlo como un `L1 / L2` actual, no solo como “home + páginas”.</p>
+        </div>
         <div class="tree-flow">
           <div class="tree-root">
             <strong><code>www.10pines.com</code> como punto de partida</strong>
-            <p>Partiendo desde la home, el ecosistema se abre hacia varias capas públicas con entidad propia. El sitio principal actúa como hub, pero no absorbe todo: deriva hacia propiedades con roles y densidades distintas.</p>
+            <p>Desde la home actual se abre un árbol de propiedades que organizan distintas capas del relato: oferta, expertise, cultura, learning y reputación.</p>
             <ul class="tree-branches">
               <li><strong>Servicios / método / tecnología / contacto</strong><small>vive principalmente en el main site y organiza la lectura comercial base.</small></li>
               <li><strong>Blog</strong><small>extiende expertise y autoridad editorial.</small></li>
@@ -631,6 +664,31 @@
               <li><strong>Academia + Cursos + Desarrollo Ágil</strong><small>abren la capa de learning entre discovery, detalle, transacción y consumo.</small></li>
               <li><strong>Press</strong><small>funciona como soporte reputacional.</small></li>
             </ul>
+          </div>
+          <div class="table-wrap tree-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nivel</th>
+                  <th>Propiedad / rama</th>
+                  <th>Qué contiene hoy</th>
+                  <th>Lectura</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>L1</td><td><code>www.10pines.com</code></td><td>Oferta, método, tecnología, proof, contacto</td><td>Hub principal y punto de entrada más claro del sistema.</td></tr>
+                <tr><td>L1</td><td><code>blog.10pines.com</code></td><td>Home editorial, artículos, tags, autores</td><td>Capa de expertise sostenida y visible.</td></tr>
+                <tr><td>L1</td><td><code>cultura.10pines.com</code></td><td>Manifiesto y protocolo cultural</td><td>Canon cultural separado del flujo comercial.</td></tr>
+                <tr><td>L1</td><td><code>academia.10pines.com</code></td><td>Home de academia, catálogo, webinars, contacto</td><td>Discovery de learning y training.</td></tr>
+                <tr><td>L1</td><td><code>cursos.10pines.com</code></td><td>Catálogo, fichas de producto, consumo</td><td>Capa transaccional del learning stack.</td></tr>
+                <tr><td>L1</td><td><code>desarrolloagil.10pines.com</code></td><td>Landing puntual</td><td>Oferta específica o campaña.</td></tr>
+                <tr><td>L1</td><td><code>press.10pines.com</code></td><td>Press home</td><td>Activo de soporte reputacional.</td></tr>
+                <tr><td>L2</td><td>Main site</td><td>Oferta, método, cultura, tecnología, proof, contacto</td><td>Conviven capas core y señales de marca.</td></tr>
+                <tr><td>L2</td><td>Blog</td><td>Listados editoriales, detalle de artículo, taxonomías</td><td>La autoridad técnica se organiza como sistema editorial.</td></tr>
+                <tr><td>L2</td><td>Cultura</td><td>Manifiesto, protocolo, idiomas</td><td>La cultura gana entidad propia.</td></tr>
+                <tr><td>L2</td><td>Academia + Cursos</td><td>Discovery, detalle, transacción y consumo</td><td>La capa de learning queda distribuida entre varias superficies.</td></tr>
+              </tbody>
+            </table>
           </div>
           <div class="tree-grid">
             <article class="tree-card">
@@ -765,34 +823,17 @@
           <p><strong>Exposición</strong> no significa solamente “qué está en el menú”. Acá se usa para medir qué tan visible, accesible y persistente es cada tema dentro del ecosistema.</p>
           <p><strong>Importa</strong> porque cuando varias capas del sistema aparecen con exposición alta, dejan de ordenarse jerárquicamente y empiezan a competir por primacía.</p>
         </div>
-        <div class="two">
-          <div class="card">
-            <h3>Cómo se midió</h3>
-            <ul>
-              <li><strong>Ubicación:</strong> header, hero, cuerpo o footer.</li>
-              <li><strong>Profundidad:</strong> cuántos clicks desde el entry point.</li>
-              <li><strong>Scroll:</strong> arriba del fold, mitad o scroll profundo.</li>
-              <li><strong>Persistencia:</strong> si aparece en desktop, mobile o varias superficies.</li>
-              <li><strong>Continuidad:</strong> si al entrar se sigue entendiendo el sistema.</li>
-              <li><strong>Vuelta:</strong> si hay camino claro de retorno.</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3>Lectura</h3>
-            <p>El problema no es que un solo tema tenga demasiada exposición. El problema es que <strong>servicios, cultura, expertise y learning</strong> aparecen todos como capas importantes.</p>
-            <div class="callout warn">
-              <strong>Resultado</strong>
-              <p>El sistema se ve rico, pero no se ve comprimido.</p>
-            </div>
-          </div>
+        <div class="callout warn">
+          <strong>Lectura</strong>
+          <p>El problema no es que un solo tema tenga demasiada exposición. El problema es que <strong>servicios, cultura, expertise y learning</strong> aparecen todos como capas importantes.</p>
         </div>
         <div class="bars">
-          <div class="bar-row"><strong>Learning</strong><div class="bar"><span style="width:92%"></span></div><span>muy alta</span></div>
-          <div class="bar-row"><strong>Cultura</strong><div class="bar"><span style="width:88%"></span></div><span>alta</span></div>
-          <div class="bar-row"><strong>Expertise</strong><div class="bar"><span style="width:82%"></span></div><span>alta</span></div>
-          <div class="bar-row"><strong>Servicios</strong><div class="bar"><span style="width:72%"></span></div><span>alta</span></div>
-          <div class="bar-row"><strong>Contacto</strong><div class="bar"><span style="width:66%"></span></div><span>media-alta</span></div>
-          <div class="bar-row"><strong>Proof</strong><div class="bar"><span style="width:58%"></span></div><span>media</span></div>
+          <div class="bar-row level-very-high"><strong>Learning</strong><div class="bar"><span style="width:92%"></span></div><span>muy alta</span></div>
+          <div class="bar-row level-high"><strong>Cultura</strong><div class="bar"><span style="width:88%"></span></div><span>alta</span></div>
+          <div class="bar-row level-high"><strong>Expertise</strong><div class="bar"><span style="width:82%"></span></div><span>alta</span></div>
+          <div class="bar-row level-high"><strong>Servicios</strong><div class="bar"><span style="width:72%"></span></div><span>alta</span></div>
+          <div class="bar-row level-med-high"><strong>Contacto</strong><div class="bar"><span style="width:66%"></span></div><span>media-alta</span></div>
+          <div class="bar-row level-medium"><strong>Proof</strong><div class="bar"><span style="width:58%"></span></div><span>media</span></div>
         </div>
       </section>
 
@@ -928,11 +969,11 @@
           <p>Hoy el ecosistema deja una impresión especialmente fuerte de <strong>cultura</strong>, <strong>expertise</strong> y <strong>learning</strong>.</p>
         </div>
         <div class="bars">
-          <div class="bar-row"><strong>Cultura</strong><div class="bar"><span style="width:90%"></span></div><span>dominante</span></div>
-          <div class="bar-row"><strong>Learning</strong><div class="bar"><span style="width:86%"></span></div><span>dominante</span></div>
-          <div class="bar-row"><strong>Expertise</strong><div class="bar"><span style="width:84%"></span></div><span>dominante</span></div>
-          <div class="bar-row"><strong>Servicios</strong><div class="bar"><span style="width:70%"></span></div><span>visible</span></div>
-          <div class="bar-row"><strong>Proof</strong><div class="bar"><span style="width:61%"></span></div><span>presente</span></div>
+          <div class="bar-row level-very-high"><strong>Cultura</strong><div class="bar"><span style="width:90%"></span></div><span>dominante</span></div>
+          <div class="bar-row level-high"><strong>Learning</strong><div class="bar"><span style="width:86%"></span></div><span>dominante</span></div>
+          <div class="bar-row level-high"><strong>Expertise</strong><div class="bar"><span style="width:84%"></span></div><span>dominante</span></div>
+          <div class="bar-row level-med-high"><strong>Servicios</strong><div class="bar"><span style="width:70%"></span></div><span>visible</span></div>
+          <div class="bar-row level-medium"><strong>Proof</strong><div class="bar"><span style="width:61%"></span></div><span>presente</span></div>
         </div>
         <div class="callout">
           <strong>Lectura</strong>
@@ -960,8 +1001,16 @@
             <p><code>cultura</code> y <code>blog/culture</code> hablan del mismo territorio desde lógicas distintas: manifiesto vs stream editorial.</p>
           </div>
         </div>
-        <div class="table-wrap sticky-col">
+        <div class="table-wrap sticky-col dup-table">
           <table>
+            <colgroup>
+              <col />
+              <col class="url-col" />
+              <col class="url-col" />
+              <col class="type-col" />
+              <col class="read-col" />
+              <col class="read-col" />
+            </colgroup>
             <thead>
               <tr>
                 <th>Elemento</th>

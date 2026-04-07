@@ -41,15 +41,14 @@
     .layout {
       width: min(1240px, calc(100vw - 48px));
       margin: 28px auto 96px;
-      display: grid;
-      grid-template-columns: 160px minmax(0, 860px);
+      display: flex;
       gap: 64px;
-      align-items: start;
+      align-items: flex-start;
       justify-content: center;
     }
     .article {
-      grid-column: 2;
-      grid-row: 1;
+      flex: 0 1 860px;
+      width: 860px;
       min-width: 0;
       background: transparent;
       border: none;
@@ -60,8 +59,8 @@
       gap: 42px;
     }
     .sidebar {
-      grid-column: 1;
-      grid-row: 1;
+      order: -1;
+      flex: 0 0 160px;
       width: 160px;
       position: sticky;
       top: 28px;
@@ -164,6 +163,7 @@
     .section {
       display: grid;
       gap: 18px;
+      scroll-margin-top: 24px;
     }
     .prose {
       display: grid;
@@ -563,21 +563,23 @@
     }
     @media (max-width: 1200px) {
       .layout {
-        grid-template-columns: 1fr;
         width: min(100vw - 24px, 920px);
+        display: grid;
+        grid-template-columns: 1fr;
         gap: 28px;
       }
       .sidebar {
         position: static;
         order: -1;
-        grid-column: 1;
         width: auto;
+        flex: initial;
       }
       .side-nav {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .article {
-        grid-column: 1;
+        flex: initial;
+        width: auto;
         padding: 0;
       }
     }

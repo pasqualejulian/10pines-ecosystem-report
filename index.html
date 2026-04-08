@@ -49,7 +49,6 @@
     .article {
       flex: 0 1 860px;
       width: 860px;
-      margin-left: 224px;
       min-width: 0;
       background: transparent;
       border: none;
@@ -60,15 +59,16 @@
       gap: 64px;
     }
     .sidebar {
+      order: -1;
       flex: 0 0 160px;
       width: 160px;
-      position: fixed;
+      position: sticky;
       top: 28px;
-      left: max(24px, calc(50vw - 620px));
       display: grid;
       gap: 10px;
+      align-self: start;
+      justify-self: start;
       padding-top: 12px;
-      z-index: 20;
     }
     .side-card {
       background: transparent;
@@ -403,6 +403,109 @@
       line-height: 1.5;
       color: var(--muted);
     }
+    .tree-explorer {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      padding: 20px 22px;
+      display: grid;
+      gap: 12px;
+    }
+    .tree-explorer-head {
+      display: grid;
+      gap: 6px;
+      max-width: 54ch;
+    }
+    .tree-explorer-head p {
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .tree-browser {
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .tree-node {
+      display: grid;
+      gap: 8px;
+    }
+    .tree-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 28px;
+    }
+    .tree-toggle {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fbfaf7;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+    .tree-toggle[disabled] {
+      opacity: 0;
+      cursor: default;
+    }
+    .tree-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tree-path {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: var(--muted);
+      background: #f3eee5;
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+    .tree-name {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .tree-children {
+      margin-left: 10px;
+      padding-left: 18px;
+      border-left: 1px solid var(--line);
+      display: grid;
+      gap: 8px;
+    }
+    .tree-meta {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .tree-children[hidden] {
+      display: none;
+    }
+    .tree-summary {
+      display: grid;
+      gap: 6px;
+      padding-left: 16px;
+      border-left: 1px solid var(--line);
+      max-width: 56ch;
+    }
+    .tree-summary p {
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .tree-summary ul {
+      padding-left: 18px;
+      gap: 6px;
+    }
+    .tree-summary li {
+      font-size: 14px;
+      line-height: 1.55;
+    }
     .diagram svg {
       position: absolute;
       inset: 0;
@@ -703,11 +806,9 @@
       }
       .sidebar {
         position: static;
+        order: -1;
         width: auto;
         flex: initial;
-        left: auto;
-        top: auto;
-        z-index: auto;
       }
       .side-nav {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -715,7 +816,6 @@
       .article {
         flex: initial;
         width: auto;
-        margin-left: 0;
         padding: 0;
       }
     }
@@ -751,7 +851,7 @@
         <div class="eyebrow">Alcance y fiabilidad</div>
         <h2>Cobertura</h2>
         <div class="prose">
-          <p>El informe ya permite <strong>entender la estructura del ecosistema, las capas de contenido, las secciones principales y las repeticiones más importantes</strong>. En esta pasada se cerró mejor la cobertura sobre rutas menos visibles, estados de soporte y asimetrías entre desktop y mobile.</p>
+          <p>La corrida final tomada como base de esta versión cubre <strong>42 URLs sobre 8 hosts</strong>, con <strong>38 páginas HTML, 4 PDFs, 30 capturas mobile</strong> y una profundidad real de <strong>2 niveles</strong>. Eso alcanza para leer con solidez el ecosistema público conocido, aunque no para declarar exhaustividad interactiva total.</p>
         </div>
         <div class="five">
           <div class="card">
@@ -768,11 +868,11 @@
           </div>
           <div class="card">
             <span class="status partial">Repetición</span>
-            <p>La duplicación gruesa está, pero falta una matriz más fina de bloques y mensajes.</p>
+            <p>La duplicación gruesa y varias repeticiones de mensajes ya se leen con claridad.</p>
           </div>
           <div class="card">
             <span class="status partial">Exhaustividad</span>
-            <p>El crawl es representativo, no todavía exhaustivo en todo lo interactivo.</p>
+            <p>La cobertura es fuerte en ramas públicas visibles, pero no garantiza menús/estados puramente interactivos.</p>
           </div>
         </div>
         <div class="table-wrap">
@@ -788,10 +888,14 @@
               <tr><td>Redirects</td><td><code>cultura.10pines.com/</code> no es home real: redirige a <code>/en</code>.</td><td>La capa cultural tiene un canon explícito y una puerta principal ya resuelta por idioma.</td></tr>
               <tr><td>Rutas de soporte</td><td><code>academia</code> agrega <code>privacypolicy</code>, <code>politicadeprivacidad</code>, <code>course_registrations</code> y <code>course_contents</code>. <code>blog</code> agrega <code>disclaimer</code>, <code>tags</code>, <code>author</code> y <code>page/2</code>.</td><td>El sistema no solo tiene hubs; también tiene una segunda capa operativa y editorial bastante desarrollada.</td></tr>
               <tr><td>Mobile</td><td>Hay cobertura mobile consistente en <code>main</code>, <code>blog</code>, <code>cultura</code> y <code>academia</code>, pero no en <code>cursos</code>, <code>press</code> ni <code>desarrolloagil</code>.</td><td>La lectura multi-dispositivo del ecosistema todavía está desbalanceada.</td></tr>
-              <tr><td>Proof</td><td>El main site enlaza varios PDFs de casos además del brochure. Esos assets también existen bajo <code>10pines.com</code>.</td><td>Parte del proof más rico vive fuera del flujo HTML y además duplicado en dos canones.</td></tr>
+              <tr><td>Proof</td><td>El main site enlaza varios PDFs de casos además del brochure. La corrida final capturó la estructura PDF visible en <code>www</code> y <code>naked domain</code>.</td><td>Parte del proof más rico vive fuera del flujo HTML y además duplicado en dos canones.</td></tr>
               <tr><td>Superficies poco visibles</td><td><code>press</code> funciona como directorio reputacional y reenvía a blog y academia; <code>sign_in</code> y <code>lectures</code> muestran la capa de consumo real en <code>cursos</code>.</td><td>El ecosistema llega más lejos que “home + páginas”: ya contiene soporte, reputación, consumo y post-registro.</td></tr>
             </tbody>
           </table>
+        </div>
+        <div class="callout">
+          <strong>Base de evidencia</strong>
+          <p>Esta sección toma como referencia la corrida <code>10pines-panorama-crawl-20260408-final</code>, que además deja <code>run-summary</code>, <code>site-map</code> y screenshots sincronizados en un mismo directorio.</p>
         </div>
       </section>
 
@@ -802,6 +906,13 @@
           <p><strong>Partiendo desde <code>www.10pines.com</code></strong>, el sistema no baja solamente a secciones internas: deriva a propiedades con identidad propia. Por eso conviene leerlo como un `L1 / L2` actual, no solo como “home + páginas”.</p>
         </div>
         <div class="tree-flow">
+          <div class="tree-explorer">
+            <div class="tree-explorer-head">
+              <strong>Árbol navegable</strong>
+              <p>Desde la home se abren varias ramas reales. Acá se puede desplegar cada una para ver qué contiene y cómo se desprende del sistema principal.</p>
+            </div>
+            <div id="tree-explorer" class="tree-browser" aria-live="polite"></div>
+          </div>
           <figure class="map-figure">
             <svg viewBox="0 0 980 520" role="img" aria-label="Mapa del ecosistema digital de 10Pines con estructura L1 L2 y capas del relato">
               <text class="map-label" x="490" y="28" text-anchor="middle" style="font-size:18px;font-weight:700;">Mapa del ecosistema digital de 10Pines</text>
@@ -889,15 +1000,14 @@
               <line class="map-line" x1="540" y1="450" x2="558" y2="450" />
             </svg>
           </figure>
-          <div class="tree-root">
-            <strong><code>www.10pines.com</code> como punto de partida</strong>
-            <p>Desde la home actual se abre un árbol de propiedades que organizan distintas capas del relato: oferta, expertise, cultura, learning y reputación.</p>
-            <ul class="tree-branches">
-              <li><strong>Servicios / método / tecnología / contacto</strong><small>vive principalmente en el main site y organiza la lectura comercial base.</small></li>
-              <li><strong>Blog</strong><small>extiende expertise y autoridad editorial.</small></li>
-              <li><strong>Cultura</strong><small>externaliza el manifiesto cultural y el operating model.</small></li>
-              <li><strong>Academia + Cursos + Desarrollo Ágil</strong><small>abren la capa de learning entre discovery, detalle, transacción y consumo.</small></li>
-              <li><strong>Press</strong><small>funciona como soporte reputacional.</small></li>
+          <div class="tree-summary">
+            <p><strong>Lectura rápida.</strong> La home no deriva solo a secciones internas: deriva a propiedades con función propia.</p>
+            <ul>
+              <li><strong>Main site:</strong> oferta, método, tecnología, proof y contacto.</li>
+              <li><strong>Blog:</strong> expertise, artículos, taxonomías y autoría.</li>
+              <li><strong>Cultura:</strong> manifiesto, protocolo e idiomas.</li>
+              <li><strong>Academia + Cursos:</strong> discovery, detalle, transacción y consumo de learning.</li>
+              <li><strong>Press + Desarrollo Ágil:</strong> soporte reputacional y landings puntuales.</li>
             </ul>
           </div>
           <div class="table-wrap tree-table">
@@ -924,69 +1034,6 @@
                 <tr><td>L2</td><td>Academia + Cursos</td><td>Discovery, detalle, transacción y consumo</td><td>La capa de learning queda distribuida entre varias superficies.</td></tr>
               </tbody>
             </table>
-          </div>
-          <div class="tree-grid">
-            <article class="tree-card">
-              <h3>Main site</h3>
-              <code>www.10pines.com</code>
-              <ul class="tree-list">
-                <li>Home</li>
-                <li>Oferta de software partner</li>
-                <li>Método / cultura / tecnología</li>
-                <li>Proof y PDFs</li>
-                <li>Contacto</li>
-              </ul>
-            </article>
-            <article class="tree-card">
-              <h3>Blog</h3>
-              <code>blog.10pines.com</code>
-              <ul class="tree-list">
-                <li>Blog home</li>
-                <li>Categorías y tags</li>
-                <li>Article detail</li>
-                <li>Author / archives</li>
-                <li>Disclaimer / páginas auxiliares</li>
-              </ul>
-            </article>
-            <article class="tree-card">
-              <h3>Cultura</h3>
-              <code>cultura.10pines.com</code>
-              <ul class="tree-list">
-                <li>Manifiesto en inglés</li>
-                <li>Protocolo en español</li>
-                <li>Variantes idiomáticas</li>
-              </ul>
-            </article>
-            <article class="tree-card">
-              <h3>Academia</h3>
-              <code>academia.10pines.com</code>
-              <ul class="tree-list">
-                <li>Academy home</li>
-                <li>Catálogo / show courses</li>
-                <li>Course detail</li>
-                <li>Webinars y videos</li>
-                <li>Contacto y registro</li>
-                <li>Course contents</li>
-              </ul>
-            </article>
-            <article class="tree-card">
-              <h3>Cursos</h3>
-              <code>cursos.10pines.com</code>
-              <ul class="tree-list">
-                <li>Catalog / products</li>
-                <li>Product detail</li>
-                <li>Lecture / consumo</li>
-                <li>Sign in</li>
-              </ul>
-            </article>
-            <article class="tree-card">
-              <h3>Superficies de soporte</h3>
-              <code>desarrolloagil + press</code>
-              <ul class="tree-list">
-                <li><code>desarrolloagil</code>: landing puntual de oferta</li>
-                <li><code>press</code>: reputación y prensa</li>
-              </ul>
-            </article>
           </div>
         </div>
       </section>
@@ -1499,7 +1546,7 @@
           </div>
         </div>
         <div class="foot">
-          <span>Evidencia cruda: <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/site-map.md">site-map.md</a>, <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/site-map.json">site-map.json</a>, <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-representative-crawl-20260407-v3/screenshots">screenshots</a>.</span>
+          <span>Evidencia cruda: <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-panorama-crawl-20260408-final/site-map.md">site-map.md</a>, <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-panorama-crawl-20260408-final/site-map.json">site-map.json</a>, <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-panorama-crawl-20260408-final/run-summary.md">run-summary.md</a>, <a href="/Users/julianpasquale/Downloads/10pines/artifacts/10pines-panorama-crawl-20260408-final/screenshots">screenshots</a>.</span>
           <span>Base analítica: <a href="/Users/julianpasquale/Downloads/10pines/10PINES_MASTER_REPORT_V3.md">10PINES_MASTER_REPORT_V3.md</a></span>
         </div>
       </section>
@@ -1531,5 +1578,181 @@
       </div>
     </aside>
   </div>
+  <script>
+    const treeData = {
+      name: "www.10pines.com",
+      path: "/",
+      note: "Punto de partida y hub comercial principal",
+      expanded: true,
+      children: [
+        {
+          name: "main site",
+          path: "/",
+          note: "Oferta, método, tecnología y proof",
+          expanded: true,
+          children: [
+            { name: "brochure", kind: "pdf", path: "/brochure_en.pdf", note: "Brochure descargable" },
+            { name: "case pdf", kind: "asset", path: "/assets/sbux-rewards-4f774b23.pdf", note: "Caso en PDF visible desde home" }
+          ]
+        },
+        {
+          name: "blog.10pines.com",
+          path: "/",
+          note: "Editorial y expertise",
+          expanded: false,
+          children: [
+            { name: "quality policy", kind: "post", path: "/2018/07/18/our-quality-policy", note: "Detalle de artículo" },
+            { name: "culture", kind: "listing", path: "/culture", note: "Landing editorial por territorio" },
+            { name: "featured", kind: "listing", path: "/featured", note: "Selección editorial" },
+            { name: "tags", kind: "listing", path: "/tags", note: "Taxonomía general", expanded: false, children: [
+              { name: "author/nicolas", kind: "taxonomy", path: "/author/nicolas", note: "Archivo de autor" },
+              { name: "tag/culture", kind: "taxonomy", path: "/tag/culture", note: "Etiqueta específica" }
+            ]},
+            { name: "page/2", kind: "archive", path: "/page/2", note: "Paginación editorial" },
+            { name: "disclaimer", kind: "support", path: "/disclaimer", note: "Página auxiliar" }
+          ]
+        },
+        {
+          name: "cultura.10pines.com",
+          path: "/",
+          note: "Canon cultural",
+          expanded: false,
+          children: [
+            { name: "en", kind: "language", path: "/en", note: "Entrada real tras redirect", expanded: false, children: [
+              { name: "es/protocolo", kind: "document", path: "/es/protocolo", note: "Protocolo en español" }
+            ]}
+          ]
+        },
+        {
+          name: "academia.10pines.com",
+          path: "/",
+          note: "Discovery learning",
+          expanded: false,
+          children: [
+            { name: "show courses", kind: "listing", path: "/show_courses", note: "Catálogo principal", expanded: false, children: [
+              { name: "course_contents/181", kind: "course-content", path: "/course_contents/181", note: "Contenido de curso" },
+              { name: "course_contents/201-fundamentos-de-las-organizaciones-autogestionadas", kind: "course-content", path: "/course_contents/201-fundamentos-de-las-organizaciones-autogestionadas", note: "Contenido de curso" },
+              { name: "course_contents/98-scrum", kind: "course-content", path: "/course_contents/98-scrum", note: "Contenido de curso" }
+            ]},
+            { name: "disenio a la gorra", kind: "course", path: "/disenio_a_la_gorra", note: "Landing de curso" },
+            { name: "webinars and videos", kind: "listing", path: "/webinars_and_videos", note: "Videos y webinars" },
+            { name: "contact/new", kind: "cta", path: "/contact/new", note: "Entrada de contacto" },
+            { name: "course detail", kind: "course", path: "/courses/266-objectives-&-key-results--%5Bwho-does-what-by-how-much%5D", note: "Detalle de curso", expanded: false, children: [
+              { name: "course_registrations/new/266", kind: "registration", path: "/course_registrations/new/266", note: "Registro de curso" }
+            ]},
+            { name: "topics/15/videos/150", kind: "video", path: "/topics/15/videos/150", note: "Detalle de video" },
+            { name: "sense-and-respond", kind: "course", path: "/sense-and-respond", note: "Landing específica" },
+            { name: "politicadeprivacidad", kind: "support", path: "/politicadeprivacidad", note: "Privacidad ES" },
+            { name: "privacypolicy", kind: "support", path: "/privacypolicy", note: "Privacidad EN" }
+          ]
+        },
+        {
+          name: "cursos.10pines.com",
+          path: "/",
+          note: "Capa transaccional learning",
+          expanded: false,
+          children: [
+            { name: "catalog", kind: "listing", path: "/l/products", note: "Listado transaccional" },
+            { name: "product detail", kind: "course", path: "/p/diseno-a-la-gorra-temporada-1-buenos-aires-vs-london-vs-chicago", note: "Ficha de producto" },
+            { name: "sign in", kind: "access", path: "/sign_in", note: "Acceso", expanded: false, children: [
+              { name: "courses", kind: "listing", path: "/courses", note: "Índice de cursos" },
+              { name: "lecture", kind: "consumption", path: "/courses/diseno-a-la-gorra-temporada-1/lectures/50383778", note: "Consumo real de contenido" }
+            ]}
+          ]
+        },
+        {
+          name: "desarrolloagil.10pines.com",
+          path: "/",
+          note: "Landing puntual",
+          expanded: false,
+          children: [
+            { name: "home", kind: "landing", path: "/home", note: "Variante home" },
+            { name: "fotos", kind: "gallery", path: "/fotos", note: "Galería / soporte" }
+          ]
+        },
+        {
+          name: "press.10pines.com",
+          path: "/",
+          note: "Soporte reputacional",
+          expanded: false,
+          children: []
+        },
+        {
+          name: "10pines.com",
+          path: "/",
+          note: "Duplicado canónico",
+          expanded: false,
+          children: [
+            { name: "brochure", kind: "pdf", path: "/brochure_en.pdf", note: "Brochure duplicado" },
+            { name: "case pdf", kind: "asset", path: "/assets/sbux-rewards-4f774b23.pdf", note: "Caso duplicado" }
+          ]
+        }
+      ]
+    };
+
+    function makeTreeNode(node, depth = 0) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "tree-node";
+
+      const row = document.createElement("div");
+      row.className = "tree-row";
+      row.style.paddingLeft = `${depth * 18}px`;
+
+      const toggle = document.createElement("button");
+      toggle.className = "tree-toggle";
+      toggle.type = "button";
+
+      const label = document.createElement("div");
+      label.className = "tree-label";
+
+      const name = document.createElement("span");
+      name.className = "tree-name";
+      name.textContent = node.name;
+
+      const path = document.createElement("span");
+      path.className = "tree-path";
+      path.textContent = node.path;
+
+      const meta = document.createElement("span");
+      meta.className = "tree-meta";
+      meta.textContent = node.note || "";
+
+      label.append(name, path, meta);
+      row.append(toggle, label);
+      wrapper.append(row);
+
+      const hasChildren = Array.isArray(node.children) && node.children.length > 0;
+      if (!hasChildren) {
+        toggle.disabled = true;
+        toggle.textContent = "";
+        return wrapper;
+      }
+
+      const children = document.createElement("div");
+      children.className = "tree-children";
+      const expanded = node.expanded !== false;
+      children.hidden = !expanded;
+      toggle.textContent = expanded ? "−" : "+";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+
+      toggle.addEventListener("click", () => {
+        const next = children.hidden;
+        children.hidden = !next;
+        toggle.textContent = next ? "−" : "+";
+        toggle.setAttribute("aria-expanded", next ? "true" : "false");
+      });
+
+      for (const child of node.children) {
+        children.append(makeTreeNode(child, depth + 1));
+      }
+      wrapper.append(children);
+      return wrapper;
+    }
+
+    const treeTarget = document.getElementById("tree-explorer");
+    if (treeTarget) {
+      treeTarget.append(makeTreeNode(treeData));
+    }
+  </script>
 </body>
 </html>
